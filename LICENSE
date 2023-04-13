@@ -1,18 +1,21 @@
-Awesome_Place_Search Package Terms and Conditions:
+MIT License
 
-Introduction
-The Awesome_Place_Search Package ("Service") is provided by Lorito Tiago, Mobile Application Developer. These terms and conditions govern your use of the Service. By accessing or using the Service, the User agrees to these Terms.
+Copyright (c) [2023] [Lorito Tiago]
 
-Use of the Service
-The Service allows the User to search for locations and points of interest around the world. The Provider does not guarantee the accuracy or completeness of the information provided through the Service, and the User assumes full responsibility for the use of the information transmitted through the Service.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-Fees and Payments
-The Service is provided free of charge for your personal, non-commercial use. For commercial or business use, the User must contact the Provider for information on fees and payment terms.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-Intellectual property
-All content and intellectual property associated with the Service are the exclusive property of the Provider. The User agrees not to copy, reproduce, distribute or commercially exploit any content or intellectual property associated with the Service without the express authorization of the Provider.
-
-Limitation of Liability
-The Provider shall not be liable for any losses, damages, expenses or expenses arising out of or in connection with the User's use of the Service, including, without limitation, indirect, incidental or consequential damages. The Provider shall also not be liable for any loss, damage, cost or expense arising out of or in connection with the unavailability or interruption of the Service.
-
-Copyright 2023 Lorito Tiago
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

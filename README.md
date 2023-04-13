@@ -15,7 +15,7 @@ The awesome_place_search package is a Flutter library that provides a user inter
 ### Add pubspec.yaml
 ``` yaml
 dependencies:
-  awesome_place_search: ^1.0.0
+  awesome_place_search: ^1.0.2
 ```
 ---
 ## Usage
@@ -28,7 +28,7 @@ import 'package:awesome_place_search/awesome_place_search.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
 
   PredictionModel? prediction;
   @override
