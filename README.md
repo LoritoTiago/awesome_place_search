@@ -1,7 +1,7 @@
 # Awesome Place Search
 
 ```
-Clean Architecture and Bloc without package
+Clean Architecture and Bloc( without package )
 ```
 
 # Description
