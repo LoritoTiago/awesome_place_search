@@ -1,9 +1,9 @@
 # Awesome Place Search
 
-<!-- [![pub package](https://img.shields.io/pub/v/alert_dialog.svg)](https://pub.dartlang.org/packages/alert_dialog) -->
+```
+Clean Architecture and Bloc without package
+```
 
-<!-- Alert Dialog Widget for Flutter(JS-LIKE). -->
-<!-- https://pub.dev/packages/alert_dialog -->
 
 ## Installation
 
