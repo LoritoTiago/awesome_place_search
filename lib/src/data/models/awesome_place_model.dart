@@ -9,15 +9,15 @@ AwesomePlacesSearchModel awesomePlacesModelFromJson(String str) =>
     AwesomePlacesSearchModel.fromJson(json.decode(str));
 
 class AwesomePlacesSearchModel extends AwesomePlacesSearchEntity {
-  final List<PredictionModel>? predictions;
+  final List<PredictionModel>? predictionsModel;
   AwesomePlacesSearchModel({
-    this.predictions,
+    this.predictionsModel,
     String? status,
-  }) : super(predictions: predictions, status: status);
+  }) : super(predictions: predictionsModel, status: status);
 
   factory AwesomePlacesSearchModel.fromJson(Map<String, dynamic> json) =>
       AwesomePlacesSearchModel(
-        predictions: json["predictions"] == null
+        predictionsModel: json["predictions"] == null
             ? []
             : List<PredictionModel>.from(
                 json["predictions"]!.map((x) => PredictionModel.fromJson(x))),

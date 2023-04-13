@@ -1,12 +1,11 @@
-import 'package:awesome_place_search/src/core/error/exceptions/key_empty_exception.dart';
-import 'package:awesome_place_search/src/core/error/faliures/key_empty_faliure.dart';
-import 'package:awesome_place_search/src/data/models/lat_lng_model.dart';
-import 'package:awesome_place_search/src/domain/entities/lat_lng_entity.dart';
+import '../../core/error/exceptions/key_empty_exception.dart';
+import '../../core/error/faliures/key_empty_faliure.dart';
+
 import 'package:dartz/dartz.dart';
 
 import '../../domain/entities/awesome_place_entity.dart';
 import '../../domain/repositories/i_get_places.dart';
-import '../../core/error/exceptions/server_exception.dart';
+
 import '../../core/error/faliures/empty_faliure.dart';
 import '../../core/error/faliures/i_faliure.dart';
 import '../../core/error/faliures/server_faliure.dart';

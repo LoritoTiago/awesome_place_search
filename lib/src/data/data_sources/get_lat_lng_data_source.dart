@@ -20,8 +20,8 @@ class GetLatLngDataSource implements IGetLatLngDataSource {
     try {
       PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(parm);
       final LatLngModel result = LatLngModel(
-        lat: detail.result.geometry!.location.lat,
-        lng: detail.result.geometry!.location.lng,
+        latModel: detail.result.geometry!.location.lat,
+        lngModel: detail.result.geometry!.location.lng,
       );
       return result;
     } catch (e) {

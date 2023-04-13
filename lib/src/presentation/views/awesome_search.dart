@@ -88,7 +88,7 @@ class AwesomeSearch {
         stream: bloc.stream,
         builder: (context, AsyncSnapshot<AwesomePlacesSearchState> value) {
           final state = value.data;
-          final places = state?.places.predictions ?? [];
+          final places = state?.places.predictionsModel ?? [];
 
           if (state is AwesomePlacesSearchClickedState) {
             onTap(Future.value(state.place));
@@ -200,7 +200,7 @@ class AwesomeSearch {
       onTap: () {
         bloc.input.add(
           AwesomePlacesSearchClickedEvent(
-            places: AwesomePlacesSearchModel(predictions: []),
+            places: AwesomePlacesSearchModel(predictionsModel: []),
             place: place,
           ),
         );
