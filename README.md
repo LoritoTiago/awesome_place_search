@@ -1,39 +1,75 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Awesome Place Search
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+<!-- [![pub package](https://img.shields.io/pub/v/alert_dialog.svg)](https://pub.dartlang.org/packages/alert_dialog) -->
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+<!-- Alert Dialog Widget for Flutter(JS-LIKE). -->
+<!-- https://pub.dev/packages/alert_dialog -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Installation
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
+### Add pubspec.yaml
+``` yaml
+dependencies:
+  awesome_place_search: ^1.0.0
+```
+---
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### Basic
+``` dart
+import 'package:flutter/material.dart';
 
-```dart
-const like = 'sample';
+import 'package:awesome_place_search/awesome_place_search.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+
+  PredictionModel? prediction;
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Welcome to Flutter',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Welcome to Flutter'),
+        ),
+        body: Center(
+          child: Text(prediction.description??"Prediction is null")
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+                _searchPlaces();
+            },
+            child: const Icon(Icons.add,
+        ),
+      ),
+      ),
+     
+    );
+  }
+
+  void _searchPlaces(){
+     AwesomeSearch(
+        context: context,
+        key: "Your Google map key",
+        onTap: (value) async {
+           final result = await value;
+           setState(() {
+                prediction=result;
+            });
+        },
+    );
+  }
+}
 ```
 
-## Additional information
+---
+## Maintainer
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+- [Lorito Tiago](https://github.com/gtgalone)
+
+### Demo
+<img src="https://user-images.githubusercontent.com/58330997/231830074-d9c9c65a-cc42-4bcf-80b6-3828b0374fc5.gif" width="230" height="440" alt="Awesome Place Search Demo" />
+
+

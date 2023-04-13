@@ -19,10 +19,18 @@ import 'package:skeletons/skeletons.dart';
 
 class AwesomeSearch {
   final String key;
+  final String hint;
+  final String errorText;
   final BuildContext context;
-  final Function(PredictionModel) onTap;
+  final Function(Future<PredictionModel>) onTap;
+
   AwesomeSearch(
-      {required this.context, required this.key, required this.onTap}) {
+      {required this.context,
+      required this.key,
+      this.errorText = "something went wrong",
+      this.hint = "where are we going?",
+      required this.onTap}) {
+    //init clean architecture dependency
     final dataSource = GetPlacesRemoteDataSource(key: key);
     final repository = GetPlaceRepository(dataSource: dataSource);
     final usecase = GetPlacesUsecase(repository: repository);
@@ -40,8 +48,7 @@ class AwesomeSearch {
 
   final txtsearch = TextEditingController();
   double height = 0.0;
-  bool searching = true;
-  bool isSelectede = false;
+
   void show() {
     showModalBottomSheet(
       context: context,
@@ -83,8 +90,10 @@ class AwesomeSearch {
           final places = state?.places.predictions ?? [];
 
           if (state is AwesomePlacesSearchClickedState) {
-            onTap(state.place);
-            Navigator.pop(context);
+            onTap(Future.value(state.place));
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.pop(context);
+            });
           }
 
           return Padding(
@@ -109,6 +118,7 @@ class AwesomeSearch {
                         left: 0,
                         right: 0,
                         child: CustomTextField(
+                          hint: hint,
                           controller: txtsearch,
                           onChange: (value) {
                             bloc.input.add(
@@ -147,7 +157,7 @@ class AwesomeSearch {
               size: 120.0,
             ),
             const SizedBox(height: 20),
-            Text(state.message),
+            Text(errorText),
           ],
         ),
       );

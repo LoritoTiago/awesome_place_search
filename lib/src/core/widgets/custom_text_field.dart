@@ -5,9 +5,13 @@ import 'package:flutter/widgets.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
+  final String hint;
   final Function(String) onChange;
   const CustomTextField(
-      {super.key, required this.controller, required this.onChange});
+      {super.key,
+      required this.hint,
+      required this.controller,
+      required this.onChange});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +57,7 @@ class CustomTextField extends StatelessWidget {
               color: Colors.grey,
             ),
             border: InputBorder.none,
-            hintText: "Ola mundo",
+            hintText: hint,
           ),
         ),
       ),

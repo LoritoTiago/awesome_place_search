@@ -52,17 +52,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    // setState(() {
-    //   // This call to setState tells the Flutter framework that something has
-    //   // changed in this State, which causes it to rerun the build method below
-    //   // so that the display can reflect the updated values. If we changed
-    //   // _counter without calling setState(), then the build method would not be
-    //   // called again, and so nothing would appear to happen.
-    //   _counter++;
-    // });
-  }
+  PredictionModel? prediction;
 
   @override
   Widget build(BuildContext context) {
@@ -81,46 +71,73 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+        child: prediction != null
+            ? Column(
+                // Column is also a layout widget. It takes a list of children and
+                // arranges them vertically. By default, it sizes itself to fit its
+                // children horizontally, and tries to be as tall as its parent.
+                //
+                // Invoke "debug painting" (press "p" in the console, choose the
+                // "Toggle Debug Paint" action from the Flutter Inspector in Android
+                // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+                // to see the wireframe for each widget.
+                //
+                // Column has various properties to control how it sizes itself and
+                // how it positions its children. Here we use mainAxisAlignment to
+                // center the children vertically; the main axis here is the vertical
+                // axis because Columns are vertical (the cross axis would be
+                // horizontal).
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _line(
+                      title: "description", subTitle: prediction!.description!),
+                  _line(
+                      title: "Coordinate",
+                      subTitle:
+                          "${prediction!.latitude}, ${prediction!.longitude}"),
+                  _line(title: "PlaceId", subTitle: prediction!.placeId!),
+                  _line(
+                      title: "Secondary text",
+                      subTitle:
+                          prediction!.structuredFormatting!.secondaryText!),
+                ],
+              )
+            : const Center(
+                child: Text('Tap in float action button to get prediction')),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           AwesomeSearch(
             context: context,
             key: "AIzaSyBUkcH9HRkW4dviCM-oSaLt5FFPU1BWXFM",
-            onTap: (PredictionModel value) {
-              log(value.description!);
+            onTap: (value) async {
+              final va = await value;
+              setState(() {
+                prediction = va;
+              });
             },
           );
         },
-        tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget _line({required String title, required String subTitle}) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "$title: ",
+            style: const TextStyle(
+                fontWeight: FontWeight.w800, color: Colors.black, fontSize: 20),
+          ),
+          TextSpan(
+            text: " $subTitle",
+            style: const TextStyle(color: Colors.black, fontSize: 15),
+          ),
+        ],
+      ),
     );
   }
 }
