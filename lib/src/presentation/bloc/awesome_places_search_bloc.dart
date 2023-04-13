@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:awesome_place_search/src/data/repositories/get_places_repository.dart';
 import 'package:awesome_place_search/src/domain/usecases/get_places_usecase.dart';
@@ -23,15 +24,21 @@ class AwesomePlacesBloc {
   }
 
   void _listenEvent(AwesomePlacesSearchEvent event) {
-    if (event is AwesomePlacesSearchInitialEvent) {
-      _output.add(const AwesomePlacesSearchInitialState());
+    if (event is AwesomePlacesSearchLoadingEvent) {
+      _output.add(const AwesomePlacesSearchLoadingState());
     }
-
-    if (event is AwesomePlacesSearchLoadingEvent) {}
 
     if (event is AwesomePlacesSearchLoadedEvent) {}
 
     if (event is AwesomePlacesSearchClickedEvent) {
+      _output.add(
+        AwesomePlacesSearchClickedState(
+            place: event.place, places: event.places),
+      );
+    }
+
+    if (event is AwesomePlacesSearchClouseEvent) {
+      log("Dismissed");
       _input.close();
     }
   }

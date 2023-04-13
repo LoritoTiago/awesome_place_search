@@ -6,15 +6,20 @@ abstract class AwesomePlacesSearchEvent extends Equatable {
   const AwesomePlacesSearchEvent({required this.places});
 }
 
-class AwesomePlacesSearchInitialEvent extends AwesomePlacesSearchEvent {
-  const AwesomePlacesSearchInitialEvent() : super(places: const []);
+class AwesomePlacesSearchLoadingEvent extends AwesomePlacesSearchEvent {
+  final String value;
+  const AwesomePlacesSearchLoadingEvent(
+      {required this.value, required List<AwesomePlacesSearchModel> places})
+      : super(places: places);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [value, places];
 }
 
-class AwesomePlacesSearchLoadingEvent extends AwesomePlacesSearchEvent {
-  const AwesomePlacesSearchLoadingEvent() : super(places: const []);
+class AwesomePlacesSearchClouseEvent extends AwesomePlacesSearchEvent {
+  const AwesomePlacesSearchClouseEvent(
+      {required List<AwesomePlacesSearchModel> places})
+      : super(places: places);
 
   @override
   List<Object?> get props => [];

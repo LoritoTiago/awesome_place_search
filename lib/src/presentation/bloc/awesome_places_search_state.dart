@@ -20,6 +20,16 @@ class AwesomePlacesSearchLoadingState extends AwesomePlacesSearchState {
   List<Object?> get props => [];
 }
 
+class AwesomePlacesSearchSearchingState extends AwesomePlacesSearchState {
+  final String value;
+  const AwesomePlacesSearchSearchingState(
+      {required this.value, required List<AwesomePlacesSearchModel> places})
+      : super(places: places);
+
+  @override
+  List<Object?> get props => [places, value];
+}
+
 class AwesomePlacesSearchLoadedState extends AwesomePlacesSearchState {
   const AwesomePlacesSearchLoadedState(
       {required List<AwesomePlacesSearchModel> places})
