@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:awesome_place_search/awesome_place_search.dart';
 import 'package:flutter/material.dart';
 
