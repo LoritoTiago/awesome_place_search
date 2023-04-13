@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:awesome_place_search/src/core/error/exceptions/key_empty_exception.dart';
+
 import '../models/awesome_place_model.dart';
 import '../../core/error/exceptions/network_exception.dart';
 import '../../core/error/exceptions/server_exception.dart';
@@ -15,6 +17,10 @@ class GetPlacesRemoteDataSource implements IGetPlacesRemoteDataSource {
   GetPlacesRemoteDataSource({required this.key});
   @override
   Future<AwesomePlacesSearchModel> call({required ParmSearchModel parm}) async {
+    if (parm.key.isEmpty) {
+      throw KeyEmptyException();
+    }
+
     try {
       var url =
           Uri.https("maps.googleapis.com", "maps/api/place/autocomplete/json", {

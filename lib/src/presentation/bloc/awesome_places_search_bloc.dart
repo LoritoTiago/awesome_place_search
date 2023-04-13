@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:awesome_place_search/src/core/error/faliures/key_empty_faliure.dart';
 import 'package:awesome_place_search/src/core/error/faliures/server_faliure.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
@@ -45,7 +46,7 @@ class AwesomePlacesBloc {
       usecase.fold((left) {
         if (left is ServerFailure) {
           _output.add(
-            AwesomePlacesSearchErrorState(message: "Algo correu mal"),
+            AwesomePlacesSearchErrorState(),
           );
         }
       }, (rigth) {
@@ -68,9 +69,13 @@ class AwesomePlacesBloc {
     final parm = ParmSearchModel(value: event.value, key: key);
     final result = await usecase.call(parm: parm);
     result.fold((left) {
+      if (left is KeyEmptyFaliure) {
+        _output.add(AwesomePlacesSearchKeyEmptyState(
+            message: "Please enter a valid key"));
+      }
       if (left is ServerFailure) {
         _output.add(
-          AwesomePlacesSearchErrorState(message: "Algo correu mal"),
+          AwesomePlacesSearchErrorState(),
         );
       }
     }, (right) {

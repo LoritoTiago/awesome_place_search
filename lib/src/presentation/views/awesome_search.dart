@@ -146,6 +146,24 @@ class AwesomeSearch {
       return Positioned.fill(top: 80, child: _emptyList());
     }
 
+    if (state is AwesomePlacesSearchKeyEmptyState) {
+      return Positioned.fill(
+        top: 80,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.no_encryption_gmailerrorred_outlined,
+              size: 120.0,
+            ),
+            const SizedBox(height: 20),
+            Text(state.message),
+          ],
+        ),
+      );
+    }
+
     if (state is AwesomePlacesSearchErrorState) {
       return Positioned.fill(
         top: 80,

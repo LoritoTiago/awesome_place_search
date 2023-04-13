@@ -1,0 +1,1 @@
+class KeyEmptyException implements Exception {}

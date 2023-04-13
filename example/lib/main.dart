@@ -49,7 +49,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   PredictionModel? prediction;
 
   @override
@@ -101,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           AwesomeSearch(
             context: context,
-            key: "AIzaSyBUkcH9HRkW4dviCM-oSaLt5FFPU1BWXFM",
+            key: "Your Google Map Key",
             onTap: (value) async {
               final va = await value;
               setState(() {
