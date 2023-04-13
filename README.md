@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
 ---
 ## Maintainer
 
-- [Lorito Tiago](https://github.com/gtgalone)
+- [Lorito Tiago](https://github.com/LoritoTiago)
 
 ### Demo
 <img src="https://user-images.githubusercontent.com/58330997/231830074-d9c9c65a-cc42-4bcf-80b6-3828b0374fc5.gif" width="230" height="440" alt="Awesome Place Search Demo" />
