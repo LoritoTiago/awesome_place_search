@@ -1,5 +1,5 @@
-class AwesomePlacesEntity {
-  AwesomePlacesEntity({
+class AwesomePlacesSearchEntity {
+  AwesomePlacesSearchEntity({
     this.predictions,
     this.status,
   });

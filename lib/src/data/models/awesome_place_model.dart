@@ -3,17 +3,17 @@ import 'dart:convert';
 import '../../domain/entities/awesome_place_entity.dart';
 import '../../domain/repositories/i_get_places.dart';
 
-AwesomePlacesModel awesomePlacesModelFromJson(String str) =>
-    AwesomePlacesModel.fromJson(json.decode(str));
+AwesomePlacesSearchModel awesomePlacesModelFromJson(String str) =>
+    AwesomePlacesSearchModel.fromJson(json.decode(str));
 
-class AwesomePlacesModel extends AwesomePlacesEntity {
-  AwesomePlacesModel({
+class AwesomePlacesSearchModel extends AwesomePlacesSearchEntity {
+  AwesomePlacesSearchModel({
     List<PredictionModel>? predictions,
     String? status,
   }) : super(predictions: predictions, status: status);
 
-  factory AwesomePlacesModel.fromJson(Map<String, dynamic> json) =>
-      AwesomePlacesModel(
+  factory AwesomePlacesSearchModel.fromJson(Map<String, dynamic> json) =>
+      AwesomePlacesSearchModel(
         predictions: json["predictions"] == null
             ? []
             : List<PredictionModel>.from(

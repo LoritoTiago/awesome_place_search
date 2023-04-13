@@ -3,7 +3,7 @@ import '../../error/faliures/i_faliure.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class IGetPlacesRepository {
-  Future<Either<Faliure, AwesomePlacesEntity>> call(
+  Future<Either<Faliure, AwesomePlacesSearchEntity>> call(
       {required ParmSearchEntity parm});
 }
 

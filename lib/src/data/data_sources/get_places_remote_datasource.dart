@@ -6,12 +6,12 @@ import '../../error/exceptions/server_exception.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IGetPlacesRemoteDataSource {
-  Future<AwesomePlacesModel> call({required ParmSearchModel parm});
+  Future<AwesomePlacesSearchModel> call({required ParmSearchModel parm});
 }
 
 class GetPlacesRemoteDataSource implements IGetPlacesRemoteDataSource {
   @override
-  Future<AwesomePlacesModel> call({required ParmSearchModel parm}) async {
+  Future<AwesomePlacesSearchModel> call({required ParmSearchModel parm}) async {
     try {
       var url =
           Uri.https("maps.googleapis.com", "maps/api/place/autocomplete/json", {

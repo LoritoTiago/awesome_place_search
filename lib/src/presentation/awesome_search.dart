@@ -1,24 +1,37 @@
 import 'dart:developer';
 
-import 'package:awesome_place_search/src/presentation/widgets/custom_text_field.dart';
+import 'package:awesome_place_search/src/presentation/bloc/awesome_places_search_state.dart';
+
+import '../data/data_sources/get_places_remote_datasource.dart';
+import '../data/repositories/get_places_repository.dart';
+import '../domain/usecases/get_places_usecase.dart';
+import 'bloc/awesome_places_search_bloc.dart';
+import 'bloc/awesome_places_search_event.dart';
+import 'widgets/custom_text_field.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:skeletons/skeletons.dart';
 
 class AwesomeSearch {
   final BuildContext context;
   final Function onTap;
   AwesomeSearch({required this.context, required this.onTap}) {
+    final dataSource = GetPlacesRemoteDataSource();
+    final repository = GetPlaceRepository(dataSource: dataSource);
+    final usecase = GetPlacesUsecase(repository: repository);
+    bloc = AwesomePlacesBloc(usecase: usecase);
+    bloc.input.add(const AwesomePlacesSearchInitialEvent());
     show();
   }
+  late final AwesomePlacesBloc bloc;
 
   final txtsearch = TextEditingController();
   double height = 0.0;
   bool searching = true;
 
   void show() {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -48,43 +61,49 @@ class AwesomeSearch {
   }
 
   Widget _bodyModal({required double heigth}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          const SizedBox(height: 10),
-          Container(
-            width: 100,
-            height: 10,
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(.3),
-              borderRadius: BorderRadius.circular(50),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: Stack(
+    return StreamBuilder<AwesomePlacesSearchState>(
+        stream: bloc.stream,
+        builder: (context, AsyncSnapshot<AwesomePlacesSearchState> state) {
+          final res = state.data?.places ?? [];
+          log(res.length.toString());
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               children: [
-                Positioned.fill(
-                  top: 80,
-                  child: _emptyList(),
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  child: CustomTextField(
-                    controller: txtsearch,
-                    onChange: (value) {
-                      log("$value");
-                    },
+                const SizedBox(height: 10),
+                Container(
+                  width: 100,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(.3),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        top: 80,
+                        child: _emptyList(),
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        child: CustomTextField(
+                          controller: txtsearch,
+                          onChange: (value) {
+                            log("$value");
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 
   Widget _emptyList() {

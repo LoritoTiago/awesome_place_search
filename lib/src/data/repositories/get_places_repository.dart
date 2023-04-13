@@ -14,7 +14,7 @@ class GetPlaceRepository extends IGetPlacesRepository {
 
   GetPlaceRepository({required this.dataSource});
   @override
-  Future<Either<Faliure, AwesomePlacesEntity>> call(
+  Future<Either<Faliure, AwesomePlacesSearchEntity>> call(
       {required ParmSearchEntity parm}) async {
     try {
       final res = await dataSource.call(parm: parm as ParmSearchModel);
