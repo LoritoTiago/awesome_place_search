@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:awesome_place_search/src/core/consts/const.dart';
 import 'package:awesome_place_search/src/data/data_sources/get_lat_lng_data_source.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
+import 'package:awesome_place_search/src/data/models/prediction_model.dart';
 import 'package:awesome_place_search/src/data/repositories/get_lat_lng_repository.dart';
 import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
 
