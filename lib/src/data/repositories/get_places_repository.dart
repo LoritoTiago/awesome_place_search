@@ -1,3 +1,5 @@
+import 'package:awesome_place_search/src/data/models/lat_lng_model.dart';
+import 'package:awesome_place_search/src/domain/entities/lat_lng_entity.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../domain/entities/awesome_place_entity.dart';
@@ -22,8 +24,6 @@ class GetPlaceRepository extends IGetPlacesRepository {
         return Left(EmptyFaliure());
       }
       return Right(res);
-    } on ServerException {
-      return Left(ServerFailure(message: "Server error"));
     } catch (e) {
       return Left(ServerFailure(message: "Something went wrong"));
     }

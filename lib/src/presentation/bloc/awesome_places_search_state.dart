@@ -13,6 +13,15 @@ class AwesomePlacesSearchInitialState extends AwesomePlacesSearchState {
   List<Object?> get props => [];
 }
 
+class AwesomePlacesSearchErrorState extends AwesomePlacesSearchState {
+  final String message;
+  AwesomePlacesSearchErrorState({required this.message})
+      : super(places: AwesomePlacesSearchModel());
+
+  @override
+  List<Object?> get props => [];
+}
+
 class AwesomePlacesSearchLoadingState extends AwesomePlacesSearchState {
   final String value;
   AwesomePlacesSearchLoadingState({required this.value})

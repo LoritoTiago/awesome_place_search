@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:awesome_place_search/src/core/error/faliures/server_faliure.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
-import 'package:awesome_place_search/src/data/repositories/get_places_repository.dart';
-import 'package:awesome_place_search/src/domain/usecases/get_places_usecase.dart';
+
+import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
+
 import 'package:awesome_place_search/src/presentation/bloc/awesome_places_search_event.dart';
 import 'package:awesome_place_search/src/presentation/bloc/awesome_places_search_state.dart';
 
 class AwesomePlacesBloc {
   final GetPlacesUsecase usecase;
+  final GetLatLngUsecase latLngUsecase;
   final String key;
 
   final StreamController<AwesomePlacesSearchEvent> _input =
@@ -21,23 +24,37 @@ class AwesomePlacesBloc {
 
   Stream<AwesomePlacesSearchState> get stream => _output.stream;
 
-  AwesomePlacesBloc({required this.usecase, required this.key}) {
+  AwesomePlacesBloc(
+      {required this.usecase, required this.latLngUsecase, required this.key}) {
     _input.stream.listen(_listenEvent);
   }
 
-  void _listenEvent(AwesomePlacesSearchEvent event) {
+  void _listenEvent(AwesomePlacesSearchEvent event) async {
     if (event is AwesomePlacesSearchLoadingEvent) {
       _output.add(AwesomePlacesSearchLoadingState(value: event.value));
       _searchPlaces(event);
     }
 
-    if (event is AwesomePlacesSearchLoadedEvent) {}
+    if (event is AwesomePlacesSearchLoadedEvent) {
+      _output.add(AwesomePlacesSearchLoadedState(places: event.places));
+    }
 
     if (event is AwesomePlacesSearchClickedEvent) {
-      _output.add(
-        AwesomePlacesSearchClickedState(
-            place: event.place, places: event.places),
-      );
+      final usecase = await latLngUsecase.call(parm: event.place.placeId!);
+      usecase.fold((left) {
+        if (left is ServerFailure) {
+          _output.add(
+            AwesomePlacesSearchErrorState(message: "Algo correu mal"),
+          );
+        }
+      }, (rigth) {
+        event.place.latitude = rigth.lat;
+        event.place.longitude = rigth.lng;
+        _output.add(
+          AwesomePlacesSearchClickedState(
+              place: event.place, places: event.places),
+        );
+      });
     }
 
     if (event is AwesomePlacesSearchClouseEvent) {
@@ -49,10 +66,16 @@ class AwesomePlacesBloc {
   void _searchPlaces(AwesomePlacesSearchLoadingEvent event) async {
     final parm = ParmSearchModel(value: event.value, key: key);
     final result = await usecase.call(parm: parm);
-    result.fold((left) {}, (right) {
+    result.fold((left) {
+      if (left is ServerFailure) {
+        _output.add(
+          AwesomePlacesSearchErrorState(message: "Algo correu mal"),
+        );
+      }
+    }, (right) {
       final res = right as AwesomePlacesSearchModel;
       log(res.predictions!.length.toString());
-      _output.add(AwesomePlacesSearchLoadedState(places: res));
+      _input.add(AwesomePlacesSearchLoadedEvent(places: res));
     });
   }
 

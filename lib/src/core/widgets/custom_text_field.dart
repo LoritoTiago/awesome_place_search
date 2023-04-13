@@ -38,9 +38,14 @@ class CustomTextField extends StatelessWidget {
           onChanged: onChange,
           decoration: InputDecoration(
             suffixIcon: controller.text.isNotEmpty
-                ? const Icon(
-                    Icons.cancel,
-                    color: Colors.grey,
+                ? IconButton(
+                    icon: const Icon(
+                      Icons.cancel,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      controller.text = "";
+                    },
                   )
                 : null,
             prefixIcon: const Icon(

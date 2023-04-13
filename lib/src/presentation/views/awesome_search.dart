@@ -1,15 +1,18 @@
 import 'dart:developer';
 
 import 'package:awesome_place_search/src/core/consts/const.dart';
+import 'package:awesome_place_search/src/data/data_sources/get_lat_lng_data_source.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
+import 'package:awesome_place_search/src/data/repositories/get_lat_lng_repository.dart';
+import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
 import 'package:awesome_place_search/src/presentation/bloc/awesome_places_search_state.dart';
 
-import '../data/data_sources/get_places_remote_datasource.dart';
-import '../data/repositories/get_places_repository.dart';
-import '../domain/usecases/get_places_usecase.dart';
-import 'bloc/awesome_places_search_bloc.dart';
-import 'bloc/awesome_places_search_event.dart';
-import '../core/widgets/custom_text_field.dart';
+import '../../data/data_sources/get_places_remote_datasource.dart';
+import '../../data/repositories/get_places_repository.dart';
+
+import '../bloc/awesome_places_search_bloc.dart';
+import '../bloc/awesome_places_search_event.dart';
+import '../../core/widgets/custom_text_field.dart';
 
 import 'package:flutter/material.dart';
 
@@ -24,7 +27,12 @@ class AwesomeSearch {
     final dataSource = GetPlacesRemoteDataSource(key: key);
     final repository = GetPlaceRepository(dataSource: dataSource);
     final usecase = GetPlacesUsecase(repository: repository);
-    bloc = AwesomePlacesBloc(usecase: usecase, key: key);
+
+    final latLngDataSource = GetLatLngDataSource(key: key);
+    final latLngRepository = GetLatLngRepository(dataSource: latLngDataSource);
+    final latLngUsecase = GetLatLngUsecase(repository: latLngRepository);
+    bloc = AwesomePlacesBloc(
+        usecase: usecase, latLngUsecase: latLngUsecase, key: key);
     bloc.input.add(AwesomePlacesSearchLoadingEvent(
         places: AwesomePlacesSearchModel(), value: ""));
     show();
@@ -97,7 +105,7 @@ class AwesomeSearch {
                 Expanded(
                   child: Stack(
                     children: [
-                      _switchesState(state, places),
+                      _switchState(state, places),
                       Positioned(
                         left: 0,
                         right: 0,
@@ -122,10 +130,26 @@ class AwesomeSearch {
         });
   }
 
-  Widget _switchesState(
+  Widget _switchState(
       AwesomePlacesSearchState? state, List<PredictionModel> places) {
     if (state is AwesomePlacesSearchLoadingState) {
       return Positioned.fill(top: 80, child: _emptyList());
+    }
+
+    if (state is AwesomePlacesSearchErrorState) {
+      return Positioned.fill(
+        top: 80,
+        child: Column(
+          children: [
+            const Icon(
+              Icons.nearby_error,
+              size: 60.0,
+            ),
+            const SizedBox(height: 20),
+            Text(state.message),
+          ],
+        ),
+      );
     }
 
     return Positioned.fill(top: 80, child: _list(places: places));

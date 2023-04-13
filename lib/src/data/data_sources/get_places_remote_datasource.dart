@@ -4,7 +4,6 @@ import '../models/awesome_place_model.dart';
 import '../../core/error/exceptions/network_exception.dart';
 import '../../core/error/exceptions/server_exception.dart';
 import 'package:http/http.dart' as http;
-import 'package:google_maps_webservice/places.dart';
 
 abstract class IGetPlacesRemoteDataSource {
   Future<AwesomePlacesSearchModel> call({required ParmSearchModel parm});
@@ -12,11 +11,8 @@ abstract class IGetPlacesRemoteDataSource {
 
 class GetPlacesRemoteDataSource implements IGetPlacesRemoteDataSource {
   final String key;
-  late GoogleMapsPlaces _places;
 
-  GetPlacesRemoteDataSource({required this.key}) {
-    _places = GoogleMapsPlaces(apiKey: key);
-  }
+  GetPlacesRemoteDataSource({required this.key});
   @override
   Future<AwesomePlacesSearchModel> call({required ParmSearchModel parm}) async {
     try {
@@ -30,12 +26,6 @@ class GetPlacesRemoteDataSource implements IGetPlacesRemoteDataSource {
       if (res.statusCode == 200) {
         final result = awesomePlacesModelFromJson(res.body);
 
-        // for (var element in result.predictions!) {
-        //   PlacesDetailsResponse detail =
-        //       await _places.getDetailsByPlaceId(element.placeId!);
-        //   element.latitude = detail.result.geometry!.location.lat;
-        //   element.longitude = detail.result.geometry!.location.lng;
-        // }
         return result;
       }
       throw ServerException();

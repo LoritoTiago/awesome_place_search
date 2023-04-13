@@ -1,11 +1,4 @@
-import 'package:awesome_place_search/src/domain/entities/awesome_place_entity.dart';
-import 'package:awesome_place_search/src/domain/repositories/i_get_places.dart';
-import 'package:awesome_place_search/src/core/error/faliures/i_faliure.dart';
-import 'package:dartz/dartz.dart';
-
-abstract class Usecase<Type, Parm> {
-  Future<Either<Faliure, Type>> call({required Parm parm});
-}
+part of 'use_case.dart';
 
 class GetPlacesUsecase
     extends Usecase<AwesomePlacesSearchEntity, ParmSearchEntity> {
