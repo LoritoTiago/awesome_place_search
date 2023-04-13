@@ -60,8 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
     //   // called again, and so nothing would appear to happen.
     //   _counter++;
     // });
-
-    Awesome_search(context: context, onTap: () {});
   }
 
   @override
@@ -109,7 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          AwesomeSearch(context: context, onTap: () {});
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

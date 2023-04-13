@@ -1,0 +1,4 @@
+#Mon Apr 10 11:24:08 WAT 2023
+base.0=/Users/loritombuta/Documents/GitHub/awesome_place_search/example/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

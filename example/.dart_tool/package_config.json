@@ -68,6 +68,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "google_maps_webservice",
+      "rootUri": "file:///Users/loritombuta/.pub-cache/hosted/pub.dev/google_maps_webservice-0.0.20-nullsafety.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "http",
       "rootUri": "file:///Users/loritombuta/.pub-cache/hosted/pub.dev/http-0.13.5",
       "packageUri": "lib/",
@@ -84,6 +90,12 @@
       "rootUri": "file:///Users/loritombuta/.pub-cache/hosted/pub.dev/js-0.6.5",
       "packageUri": "lib/",
       "languageVersion": "2.16"
+    },
+    {
+      "name": "json_annotation",
+      "rootUri": "file:///Users/loritombuta/.pub-cache/hosted/pub.dev/json_annotation-4.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "lints",
@@ -112,6 +124,12 @@
     {
       "name": "path",
       "rootUri": "file:///Users/loritombuta/.pub-cache/hosted/pub.dev/path-1.8.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "skeletons",
+      "rootUri": "file:///Users/loritombuta/.pub-cache/hosted/pub.dev/skeletons-0.0.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -176,7 +194,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-04-10T02:46:40.696908Z",
+  "generated": "2023-04-13T08:11:59.289499Z",
   "generator": "pub",
   "generatorVersion": "2.19.6"
 }
