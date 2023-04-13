@@ -1,0 +1,1 @@
+class NetworException implements Exception {}

@@ -1,9 +1,15 @@
-import 'package:awesome_place_search/src/domain/entities/awesome_place_entity.dart';
-import 'package:awesome_place_search/src/error/faliures/i_faliure.dart';
+import '../entities/awesome_place_entity.dart';
+import '../../error/faliures/i_faliure.dart';
 import 'package:dartz/dartz.dart';
 
-abstract class IGetPlaces {
-  Future<Either<Faliure, AwesomePlacesEntity>> call({required ParmSearch parm});
+abstract class IGetPlacesRepository {
+  Future<Either<Faliure, AwesomePlacesEntity>> call(
+      {required ParmSearchEntity parm});
 }
 
-class ParmSearch {}
+class ParmSearchEntity {
+  final String value;
+  final String key;
+
+  ParmSearchEntity({required this.key, required this.value});
+}

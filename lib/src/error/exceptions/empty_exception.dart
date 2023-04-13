@@ -1,1 +1,0 @@
-class EmptyException implements Exception {}

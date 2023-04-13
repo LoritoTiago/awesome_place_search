@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:awesome_place_search/src/domain/entities/awesome_place_entity.dart';
+import '../../domain/entities/awesome_place_entity.dart';
+import '../../domain/repositories/i_get_places.dart';
 
 AwesomePlacesModel awesomePlacesModelFromJson(String str) =>
     AwesomePlacesModel.fromJson(json.decode(str));
@@ -105,4 +106,9 @@ class Term extends TermEntity {
         offset: json["offset"],
         value: json["value"],
       );
+}
+
+class ParmSearchModel extends ParmSearchEntity {
+  ParmSearchModel({required String value, required String key})
+      : super(key: key, value: value);
 }
