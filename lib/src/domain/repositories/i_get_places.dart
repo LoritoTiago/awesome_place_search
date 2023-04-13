@@ -1,5 +1,5 @@
 import '../entities/awesome_place_entity.dart';
-import '../../error/faliures/i_faliure.dart';
+import '../../core/error/faliures/i_faliure.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class IGetPlacesRepository {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:awesome_place_search/awesome_place_search.dart';
 import 'package:flutter/material.dart';
 
@@ -108,7 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          AwesomeSearch(context: context, onTap: () {});
+          AwesomeSearch(
+            context: context,
+            key: "AIzaSyBUkcH9HRkW4dviCM-oSaLt5FFPU1BWXFM",
+            onTap: (PredictionModel value) {
+              log(value.description!);
+            },
+          );
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

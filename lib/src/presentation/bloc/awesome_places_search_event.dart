@@ -2,14 +2,14 @@ import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AwesomePlacesSearchEvent extends Equatable {
-  final List<AwesomePlacesSearchModel> places;
+  final AwesomePlacesSearchModel places;
   const AwesomePlacesSearchEvent({required this.places});
 }
 
 class AwesomePlacesSearchLoadingEvent extends AwesomePlacesSearchEvent {
   final String value;
   const AwesomePlacesSearchLoadingEvent(
-      {required this.value, required List<AwesomePlacesSearchModel> places})
+      {required this.value, required AwesomePlacesSearchModel places})
       : super(places: places);
 
   @override
@@ -18,7 +18,7 @@ class AwesomePlacesSearchLoadingEvent extends AwesomePlacesSearchEvent {
 
 class AwesomePlacesSearchClouseEvent extends AwesomePlacesSearchEvent {
   const AwesomePlacesSearchClouseEvent(
-      {required List<AwesomePlacesSearchModel> places})
+      {required AwesomePlacesSearchModel places})
       : super(places: places);
 
   @override
@@ -27,7 +27,7 @@ class AwesomePlacesSearchClouseEvent extends AwesomePlacesSearchEvent {
 
 class AwesomePlacesSearchLoadedEvent extends AwesomePlacesSearchEvent {
   const AwesomePlacesSearchLoadedEvent(
-      {required List<AwesomePlacesSearchModel> places})
+      {required AwesomePlacesSearchModel places})
       : super(places: places);
 
   @override
@@ -35,9 +35,9 @@ class AwesomePlacesSearchLoadedEvent extends AwesomePlacesSearchEvent {
 }
 
 class AwesomePlacesSearchClickedEvent extends AwesomePlacesSearchEvent {
-  final AwesomePlacesSearchModel place;
+  final PredictionModel place;
   const AwesomePlacesSearchClickedEvent(
-      {required this.place, required List<AwesomePlacesSearchModel> places})
+      {required this.place, required AwesomePlacesSearchModel places})
       : super(places: places);
 
   @override

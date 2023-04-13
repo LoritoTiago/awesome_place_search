@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart';
 
 import '../../domain/entities/awesome_place_entity.dart';
 import '../../domain/repositories/i_get_places.dart';
-import '../../error/exceptions/server_exception.dart';
-import '../../error/faliures/empty_faliure.dart';
-import '../../error/faliures/i_faliure.dart';
-import '../../error/faliures/server_faliure.dart';
+import '../../core/error/exceptions/server_exception.dart';
+import '../../core/error/faliures/empty_faliure.dart';
+import '../../core/error/faliures/i_faliure.dart';
+import '../../core/error/faliures/server_faliure.dart';
 import '../data_sources/get_places_remote_datasource.dart';
 import '../models/awesome_place_model.dart';
 

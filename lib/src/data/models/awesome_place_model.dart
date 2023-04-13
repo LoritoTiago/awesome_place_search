@@ -7,8 +7,9 @@ AwesomePlacesSearchModel awesomePlacesModelFromJson(String str) =>
     AwesomePlacesSearchModel.fromJson(json.decode(str));
 
 class AwesomePlacesSearchModel extends AwesomePlacesSearchEntity {
+  final List<PredictionModel>? predictions;
   AwesomePlacesSearchModel({
-    List<PredictionModel>? predictions,
+    this.predictions,
     String? status,
   }) : super(predictions: predictions, status: status);
 
@@ -24,14 +25,18 @@ class AwesomePlacesSearchModel extends AwesomePlacesSearchEntity {
 
 class PredictionModel extends PredictionEntity {
   PredictionModel({
+    double? latitude,
+    double? longitude,
     String? description,
-    List<MatchedSubstringEntity>? matchedSubstrings,
+    List<MatchedSubstring>? matchedSubstrings,
     String? placeId,
     String? reference,
     StructuredFormatting? structuredFormatting,
     List<Term>? terms,
     List<String>? types,
   }) : super(
+          latitude: latitude,
+          longitude: longitude,
           description: description,
           matchedSubstrings: matchedSubstrings,
           placeId: placeId,
