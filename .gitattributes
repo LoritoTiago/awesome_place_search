@@ -1,2 +1,10 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+.DS_Store
+.dart_tool/
+
+.packages
+.pub/
+
+build/
+ios/.generated/
+ios/Flutter/Generated.xcconfig
+ios/Runner/GeneratedPluginRegistrant.*
