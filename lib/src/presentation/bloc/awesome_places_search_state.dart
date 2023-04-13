@@ -1,5 +1,4 @@
-import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
-import 'package:equatable/equatable.dart';
+part of 'awesome_places_search_bloc.dart';
 
 abstract class AwesomePlacesSearchState extends Equatable {
   final AwesomePlacesSearchModel places;

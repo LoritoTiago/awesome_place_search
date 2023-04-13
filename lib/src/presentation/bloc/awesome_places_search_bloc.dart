@@ -3,11 +3,11 @@ import 'dart:developer';
 
 import 'package:awesome_place_search/src/core/error/faliures/server_faliure.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
-
+import 'package:equatable/equatable.dart';
 import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
 
-import 'package:awesome_place_search/src/presentation/bloc/awesome_places_search_event.dart';
-import 'package:awesome_place_search/src/presentation/bloc/awesome_places_search_state.dart';
+part 'awesome_places_search_state.dart';
+part 'awesome_places_search_event.dart';
 
 class AwesomePlacesBloc {
   final GetPlacesUsecase usecase;

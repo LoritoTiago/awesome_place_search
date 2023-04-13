@@ -5,13 +5,12 @@ import 'package:awesome_place_search/src/data/data_sources/get_lat_lng_data_sour
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/repositories/get_lat_lng_repository.dart';
 import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
-import 'package:awesome_place_search/src/presentation/bloc/awesome_places_search_state.dart';
 
 import '../../data/data_sources/get_places_remote_datasource.dart';
 import '../../data/repositories/get_places_repository.dart';
 
 import '../bloc/awesome_places_search_bloc.dart';
-import '../bloc/awesome_places_search_event.dart';
+
 import '../../core/widgets/custom_text_field.dart';
 
 import 'package:flutter/material.dart';
@@ -140,10 +139,12 @@ class AwesomeSearch {
       return Positioned.fill(
         top: 80,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Icon(
               Icons.nearby_error,
-              size: 60.0,
+              size: 120.0,
             ),
             const SizedBox(height: 20),
             Text(state.message),
