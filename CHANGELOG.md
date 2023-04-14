@@ -11,4 +11,7 @@
 * Changing License
 
 ## 1.0.4-dev Add Show method
-* Changing License
+* Add Show method
+
+## 1.0.5-dev Chage version in readme
+* Chage version in readme
