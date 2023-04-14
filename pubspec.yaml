@@ -1,6 +1,6 @@
 name: awesome_place_search
 description: Flutter library that provides a user interface for searching places using the Google Places API.
-version: 1.0.3-dev
+version: 1.0.4-dev
 homepage: https://github.com/LoritoTiago/awesome_place_search.git
 
 environment:

@@ -11,19 +11,29 @@ import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
 part 'awesome_places_search_state.dart';
 part 'awesome_places_search_event.dart';
 
+///[Bloc]
+///
 class AwesomePlacesSearchBloc {
   final GetPlacesUsecase usecase;
   final GetLatLngUsecase latLngUsecase;
   final String key;
 
+  ///[Event]
+  ///This is to emit a event inside of bloc
   final StreamController<AwesomePlacesSearchEvent> _input =
       StreamController<AwesomePlacesSearchEvent>();
 
+  ///[State]
+  ///This is to emit a state  inside of bloc
   final StreamController<AwesomePlacesSearchState> _output =
       StreamController<AwesomePlacesSearchState>();
 
+  ///[Event]
+  ///This is to emit a event outside bloc
   Sink<AwesomePlacesSearchEvent> get input => _input.sink;
 
+  ///[State]
+  ///This is to emit a state outside bloc
   Stream<AwesomePlacesSearchState> get stream => _output.stream;
 
   AwesomePlacesSearchBloc(
@@ -31,6 +41,8 @@ class AwesomePlacesSearchBloc {
     _input.stream.listen(_listenEvent);
   }
 
+  ///[ListenEvents]
+  ///Listen to all triggered events
   void _listenEvent(AwesomePlacesSearchEvent event) async {
     if (event is AwesomePlacesSearchLoadingEvent) {
       _output.add(AwesomePlacesSearchLoadingState(value: event.value));
@@ -65,6 +77,8 @@ class AwesomePlacesSearchBloc {
     }
   }
 
+  ///[Search]
+  ///Search places when triggered Loading event
   void _searchPlaces(AwesomePlacesSearchLoadingEvent event) async {
     final parm = ParmSearchModel(value: event.value, key: key);
     final result = await usecase.call(parm: parm);
@@ -85,6 +99,7 @@ class AwesomePlacesSearchBloc {
     });
   }
 
+  ///[TypeCheck]
   bool checkIfContains(List<String> types, List<String> data) {
     bool res = false;
     for (var type in types) {
