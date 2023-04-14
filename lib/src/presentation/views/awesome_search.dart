@@ -18,14 +18,16 @@ import 'package:flutter/material.dart';
 
 import 'package:skeletons/skeletons.dart';
 
-class AwesomeSearch {
+///[Main]
+///Main Class
+class AwesomePlaceSearch {
   final String key;
   final String hint;
   final String errorText;
   final BuildContext context;
   final Function(Future<PredictionModel>) onTap;
 
-  AwesomeSearch(
+  AwesomePlaceSearch(
       {required this.context,
       required this.key,
       this.errorText = "something went wrong",
@@ -39,17 +41,18 @@ class AwesomeSearch {
     final latLngDataSource = GetLatLngDataSource(key: key);
     final latLngRepository = GetLatLngRepository(dataSource: latLngDataSource);
     final latLngUsecase = GetLatLngUsecase(repository: latLngRepository);
-    bloc = AwesomePlacesBloc(
+    bloc = AwesomePlacesSearchBloc(
         usecase: usecase, latLngUsecase: latLngUsecase, key: key);
     bloc.input.add(AwesomePlacesSearchLoadingEvent(
         places: AwesomePlacesSearchModel(), value: ""));
-    show();
   }
-  late final AwesomePlacesBloc bloc;
+  late final AwesomePlacesSearchBloc bloc;
 
   final txtsearch = TextEditingController();
   double height = 0.0;
 
+  ///[ShowModal]
+  ///Shwo modal so searc places
   void show() {
     showModalBottomSheet(
       context: context,
@@ -83,6 +86,8 @@ class AwesomeSearch {
     );
   }
 
+  ///[Body]
+  ///Commonent that constitutes the body of the modal
   Widget _bodyModal({required double heigth}) {
     return StreamBuilder<AwesomePlacesSearchState>(
         stream: bloc.stream,
@@ -140,6 +145,10 @@ class AwesomeSearch {
         });
   }
 
+  ///[BlocState]
+  ///This component checks what the
+  ///current state is and displays
+  ///the appropriate widget depending on the state
   Widget _switchState(
       AwesomePlacesSearchState? state, List<PredictionModel> places) {
     if (state is AwesomePlacesSearchLoadingState) {
@@ -185,6 +194,8 @@ class AwesomeSearch {
     return Positioned.fill(top: 80, child: _list(places: places));
   }
 
+  ///[Places]
+  ///Show all places result
   Widget _list({required List<PredictionModel> places}) {
     return ListView.builder(
       itemCount: places.length,
@@ -194,6 +205,8 @@ class AwesomeSearch {
     );
   }
 
+  ///[PlaceResulItem]
+  ///Item of place result list
   Widget _item({required PredictionModel place}) {
     log(place.latitude.toString());
     return ListTile(
@@ -211,6 +224,8 @@ class AwesomeSearch {
     );
   }
 
+  ///[CurrentIcon]
+  ///Get current icon of place result item typ
   Widget _getIcon({required List<String> types}) {
     if (bloc.checkIfContains(types, GlobalConst.shopingList)) {
       return const Icon(Icons.shopping_bag_outlined);
@@ -247,6 +262,8 @@ class AwesomeSearch {
     return const Icon(Icons.location_on_outlined);
   }
 
+  ///[EmptySearch]
+  ///If the place list is empty then this widget is displayed
   Widget _emptyList() {
     return ListView.builder(
       itemCount: 5,

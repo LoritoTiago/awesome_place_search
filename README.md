@@ -1,9 +1,5 @@
 # Awesome Place Search
 
-```
-Clean Architecture and Bloc( without package )
-```
-
 # Description
 
 The awesome_place_search package is a Flutter library that provides a user interface for searching places using the Google Places API. With this package, you can easily implement a location search bar that shows suggestions as the user types.
@@ -17,8 +13,6 @@ The awesome_place_search package is a Flutter library that provides a user inter
 dependencies:
   awesome_place_search: ^1.0.3
 ```
----
-## Usage
 
 ### Basic
 ``` dart
@@ -54,17 +48,19 @@ class MyApp extends StatefulWidget {
     );
   }
 
+
+
   void _searchPlaces(){
-     AwesomeSearch(
+     AwesomePlaceSearch(
         context: context,
-        key: "Your Google map key",
+        key: "Your Google map key", //Insert Your google Api Key
         onTap: (value) async {
            final result = await value;
            setState(() {
                 prediction=result;
             });
         },
-    );
+     ).show();
   }
 }
 ```

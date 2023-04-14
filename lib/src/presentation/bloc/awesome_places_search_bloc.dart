@@ -11,7 +11,7 @@ import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
 part 'awesome_places_search_state.dart';
 part 'awesome_places_search_event.dart';
 
-class AwesomePlacesBloc {
+class AwesomePlacesSearchBloc {
   final GetPlacesUsecase usecase;
   final GetLatLngUsecase latLngUsecase;
   final String key;
@@ -26,7 +26,7 @@ class AwesomePlacesBloc {
 
   Stream<AwesomePlacesSearchState> get stream => _output.stream;
 
-  AwesomePlacesBloc(
+  AwesomePlacesSearchBloc(
       {required this.usecase, required this.latLngUsecase, required this.key}) {
     _input.stream.listen(_listenEvent);
   }

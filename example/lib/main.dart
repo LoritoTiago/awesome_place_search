@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          AwesomeSearch(
+          AwesomePlaceSearch(
             context: context,
             key: "Your Google Map Key",
             onTap: (value) async {
@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 prediction = va;
               });
             },
-          );
+          ).show();
         },
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
