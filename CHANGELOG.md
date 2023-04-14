@@ -10,3 +10,7 @@
 ## 1.0.2-dev Changing StatelessWidget to StatefullWidget
 
 * Updating the readme
+
+## 1.0.3-dev Changing License
+
+* Changing License
