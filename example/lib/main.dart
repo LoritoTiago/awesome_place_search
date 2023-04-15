@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           AwesomePlaceSearch(
             context: context,
-            key: "AIzaSyCAZjEG7VaicNkbIOd46Vmtxk4nqpBB4f4",
+            key: "Your Google Map Key",
             onTap: (value) async {
               final va = await value;
               setState(() {
