@@ -19,7 +19,7 @@ class GetPlacesRemoteDataSource implements IGetPlacesRemoteDataSource {
   @override
   Future<AwesomePlacesSearchModel> call({required ParmSearchModel parm}) async {
     log(parm.key);
-    if (parm.key.isEmpty) {
+    if (parm.key.isEmpty || parm.key.split(' ').isNotEmpty) {
       throw KeyEmptyException();
     } else {
       try {

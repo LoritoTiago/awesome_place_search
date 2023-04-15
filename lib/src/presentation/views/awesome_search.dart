@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:awesome_place_search/src/core/consts/const.dart';
+import 'package:awesome_place_search/src/core/services/debouncer.dart';
 import 'package:awesome_place_search/src/data/data_sources/get_lat_lng_data_source.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
@@ -49,6 +50,7 @@ class AwesomePlaceSearch {
   late final AwesomePlacesSearchBloc bloc;
 
   final txtsearch = TextEditingController();
+  final Debouncer _debouncer = Debouncer(milliseconds: 500);
   double height = 0.0;
 
   ///[ShowModal]
@@ -127,12 +129,14 @@ class AwesomePlaceSearch {
                           hint: hint,
                           controller: txtsearch,
                           onChange: (value) {
-                            bloc.input.add(
-                              AwesomePlacesSearchLoadingEvent(
-                                value: value,
-                                places: AwesomePlacesSearchModel(),
-                              ),
-                            );
+                            _debouncer.call(callback: () {
+                              bloc.input.add(
+                                AwesomePlacesSearchLoadingEvent(
+                                  value: value,
+                                  places: AwesomePlacesSearchModel(),
+                                ),
+                              );
+                            });
                           },
                         ),
                       ),
