@@ -6,7 +6,7 @@ class GetPlacesUsecase
 
   GetPlacesUsecase({required this.repository});
   @override
-  Future<Either<Faliure, AwesomePlacesSearchEntity>> call(
+  Future<Either<Failure, AwesomePlacesSearchEntity>> call(
       {required ParmSearchEntity parm}) {
     return repository.call(parm: parm);
   }
