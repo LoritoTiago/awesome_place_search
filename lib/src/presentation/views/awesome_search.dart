@@ -25,15 +25,21 @@ class AwesomePlaceSearch {
   final String key;
   final String hint;
   final String errorText;
+  final Widget? customSearchingWidget;
+  final Widget? customErrorWidget;
+
   final BuildContext context;
   final Function(Future<PredictionModel>) onTap;
 
-  AwesomePlaceSearch(
-      {required this.context,
-      required this.key,
-      this.errorText = "something went wrong",
-      this.hint = "where are we going?",
-      required this.onTap}) {
+  AwesomePlaceSearch({
+    required this.context,
+    this.customErrorWidget,
+    this.customSearchingWidget,
+    required this.key,
+    this.errorText = "something went wrong",
+    this.hint = "where are we going?",
+    required this.onTap,
+  }) {
     //init clean architecture dependency
     final dataSource = GetPlacesRemoteDataSource(key: key);
     final repository = GetPlaceRepository(dataSource: dataSource);
@@ -156,42 +162,40 @@ class AwesomePlaceSearch {
   Widget _switchState(
       AwesomePlacesSearchState? state, List<PredictionModel> places) {
     if (state is AwesomePlacesSearchLoadingState) {
-      return Positioned.fill(top: 80, child: _emptyList());
+      return Positioned.fill(
+          top: 80, child: customSearchingWidget ?? _emptyList());
     }
 
     if (state is AwesomePlacesSearchKeyEmptyState) {
       return Positioned.fill(
         top: 80,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.no_encryption_gmailerrorred_outlined,
-              size: 120.0,
+        child: customErrorWidget ??
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(state.message),
+              ],
             ),
-            const SizedBox(height: 20),
-            Text(state.message),
-          ],
-        ),
       );
     }
 
     if (state is AwesomePlacesSearchErrorState) {
       return Positioned.fill(
         top: 80,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.nearby_error,
-              size: 120.0,
+        child: customErrorWidget ??
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.nearby_error,
+                  size: 120.0,
+                ),
+                const SizedBox(height: 20),
+                Text(errorText),
+              ],
             ),
-            const SizedBox(height: 20),
-            Text(errorText),
-          ],
-        ),
       );
     }
 
