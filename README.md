@@ -11,7 +11,7 @@ The awesome_place_search package is a Flutter library that provides a user inter
 ### Add pubspec.yaml
 ``` yaml
 dependencies:
-  awesome_place_search: ^1.0.6
+  awesome_place_search: ^1.0.8
 ```
 
 ### Basic

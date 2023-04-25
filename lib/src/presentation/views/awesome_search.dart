@@ -192,7 +192,7 @@ class AwesomePlaceSearch {
                   size: 120.0,
                 ),
                 SizedBox(height: 20),
-                Text("Something went wrong"),
+                Text("errorText"),
               ],
             ),
       );
