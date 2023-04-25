@@ -1,5 +1,5 @@
 class GlobalConst {
-  static List<String> shopingList = [
+  static List<String> shoppingList = [
     "supermarket",
     "grocery_or_supermarket",
     "shopping_mall",
@@ -23,7 +23,7 @@ class GlobalConst {
     "health",
   ];
 
-  static List<String> foofList = ["cafe", "restaurant"];
+  static List<String> foodList = ["cafe", "restaurant"];
 
   static List<String> airportList = ["airport"];
 

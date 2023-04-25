@@ -1,12 +1,12 @@
 part of 'awesome_places_search_bloc.dart';
 
-///[MainContract]
+///[AwesomePlacesSearchEvent]
 abstract class AwesomePlacesSearchEvent extends Equatable {
   final AwesomePlacesSearchModel places;
   const AwesomePlacesSearchEvent({required this.places});
 }
 
-///[Loading]
+///[AwesomePlacesSearchLoadingEvent]
 ///This event is to let you know that you are looking for places
 class AwesomePlacesSearchLoadingEvent extends AwesomePlacesSearchEvent {
   final String value;
@@ -18,10 +18,10 @@ class AwesomePlacesSearchLoadingEvent extends AwesomePlacesSearchEvent {
   List<Object?> get props => [value, places];
 }
 
-///[Clouse]
-///This event is to clouse the stream
-class AwesomePlacesSearchClouseEvent extends AwesomePlacesSearchEvent {
-  const AwesomePlacesSearchClouseEvent(
+///[AwesomePlacesSearchCloseEvent]
+///This event is to close the stream
+class AwesomePlacesSearchCloseEvent extends AwesomePlacesSearchEvent {
+  const AwesomePlacesSearchCloseEvent(
       {required AwesomePlacesSearchModel places})
       : super(places: places);
 
@@ -29,7 +29,7 @@ class AwesomePlacesSearchClouseEvent extends AwesomePlacesSearchEvent {
   List<Object?> get props => [];
 }
 
-///[Loaded]
+///[AwesomePlacesSearchLoadedEvent]
 ///This event is to let you know that I have completed the search for places
 class AwesomePlacesSearchLoadedEvent extends AwesomePlacesSearchEvent {
   const AwesomePlacesSearchLoadedEvent(
@@ -40,7 +40,7 @@ class AwesomePlacesSearchLoadedEvent extends AwesomePlacesSearchEvent {
   List<Object?> get props => [places];
 }
 
-///[ClickedEvent]
+///[AwesomePlacesSearchClickedEvent]
 ///this event is to check if user a item of place
 class AwesomePlacesSearchClickedEvent extends AwesomePlacesSearchEvent {
   final PredictionModel place;

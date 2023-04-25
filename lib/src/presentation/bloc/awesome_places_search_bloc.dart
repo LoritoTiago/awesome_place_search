@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:awesome_place_search/src/core/error/faliures/key_empty_faliure.dart';
-import 'package:awesome_place_search/src/core/error/faliures/server_faliure.dart';
+import 'package:awesome_place_search/src/core/error/failures/key_empty_failure.dart';
+import 'package:awesome_place_search/src/core/error/failures/server_failure.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
 import 'package:equatable/equatable.dart';
@@ -54,7 +54,7 @@ class AwesomePlacesSearchBloc {
     }
 
     if (event is AwesomePlacesSearchClickedEvent) {
-      final usecase = await latLngUsecase.call(parm: event.place.placeId!);
+      final usecase = await latLngUsecase.call(param: event.place.placeId!);
       usecase.fold((left) {
         if (left is ServerFailure) {
           _output.add(
@@ -71,7 +71,7 @@ class AwesomePlacesSearchBloc {
       });
     }
 
-    if (event is AwesomePlacesSearchClouseEvent) {
+    if (event is AwesomePlacesSearchCloseEvent) {
       log("Dismissed");
       _input.close();
     }
@@ -80,10 +80,10 @@ class AwesomePlacesSearchBloc {
   ///[Search]
   ///Search places when triggered Loading event
   void _searchPlaces(AwesomePlacesSearchLoadingEvent event) async {
-    final parm = ParmSearchModel(value: event.value, key: key);
-    final result = await usecase.call(parm: parm);
+    final param = ParamSearchModel(value: event.value, key: key);
+    final result = await usecase.call(param: param);
     result.fold((left) {
-      if (left is KeyEmptyFaliure) {
+      if (left is KeyEmptyFailure) {
         _output.add(AwesomePlacesSearchKeyEmptyState(
             message: "Please enter a valid key"));
       }

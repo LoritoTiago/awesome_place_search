@@ -5,7 +5,7 @@ class GetLatLngUsecase extends Usecase<LatLngEntity, String> {
 
   GetLatLngUsecase({required this.repository});
   @override
-  Future<Either<Faliure, LatLngEntity>> call({required String parm}) async {
-    return repository.call(placeId: parm);
+  Future<Either<Failure, LatLngEntity>> call({required String param}) async {
+    return repository.call(placeId: param);
   }
 }

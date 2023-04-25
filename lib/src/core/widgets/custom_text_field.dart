@@ -4,11 +4,13 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
   final Function(String) onChange;
-  const CustomTextField(
-      {super.key,
-      required this.hint,
-      required this.controller,
-      required this.onChange});
+
+  const CustomTextField({
+    super.key,
+    required this.hint,
+    required this.controller,
+    required this.onChange,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,8 @@ class CustomTextField extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(10),
         ),
         boxShadow: [
           BoxShadow(

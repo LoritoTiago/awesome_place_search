@@ -71,7 +71,7 @@ class Term extends TermEntity {
       );
 }
 
-class ParmSearchModel extends ParmSearchEntity {
-  ParmSearchModel({required String value, required String key})
+class ParamSearchModel extends ParamSearchEntity {
+  ParamSearchModel({required String value, required String key})
       : super(key: key, value: value);
 }

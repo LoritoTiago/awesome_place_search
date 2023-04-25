@@ -9,7 +9,7 @@ import '../../core/error/exceptions/server_exception.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IGetPlacesRemoteDataSource {
-  Future<AwesomePlacesSearchModel> call({required ParmSearchModel parm});
+  Future<AwesomePlacesSearchModel> call({required ParamSearchModel param});
 }
 
 class GetPlacesRemoteDataSource implements IGetPlacesRemoteDataSource {
@@ -17,16 +17,16 @@ class GetPlacesRemoteDataSource implements IGetPlacesRemoteDataSource {
 
   GetPlacesRemoteDataSource({required this.key});
   @override
-  Future<AwesomePlacesSearchModel> call({required ParmSearchModel parm}) async {
-    log(parm.key);
-    if (parm.key.isEmpty || parm.key.contains(' ')) {
+  Future<AwesomePlacesSearchModel> call({required ParamSearchModel param}) async {
+    log(param.key);
+    if (param.key.isEmpty || param.key.contains(' ')) {
       throw KeyEmptyException();
     } else {
       try {
         var url = Uri.https(
             "maps.googleapis.com", "maps/api/place/autocomplete/json", {
-          "input": parm.value,
-          "key": parm.key,
+          "input": param.value,
+          "key": param.key,
         });
         var res =
             await http.Client().get(url).timeout(const Duration(seconds: 20));

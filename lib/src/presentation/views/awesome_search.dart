@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:awesome_place_search/src/core/consts/const.dart';
 import 'package:awesome_place_search/src/core/services/debouncer.dart';
 import 'package:awesome_place_search/src/data/data_sources/get_lat_lng_data_source.dart';
@@ -28,12 +27,13 @@ class AwesomePlaceSearch {
   final BuildContext context;
   final Function(Future<PredictionModel>) onTap;
 
-  AwesomePlaceSearch(
-      {required this.context,
-      required this.key,
-      this.errorText = "something went wrong",
-      this.hint = "where are we going?",
-      required this.onTap}) {
+  AwesomePlaceSearch({
+    required this.context,
+    required this.key,
+    this.errorText = "something went wrong",
+    this.hint = "where are we going?",
+    required this.onTap,
+  }) {
     //init clean architecture dependency
     final dataSource = GetPlacesRemoteDataSource(key: key);
     final repository = GetPlaceRepository(dataSource: dataSource);
@@ -47,6 +47,7 @@ class AwesomePlaceSearch {
     bloc.input.add(AwesomePlacesSearchLoadingEvent(
         places: AwesomePlacesSearchModel(), value: ""));
   }
+
   late final AwesomePlacesSearchBloc bloc;
 
   final txtsearch = TextEditingController();
@@ -54,7 +55,7 @@ class AwesomePlaceSearch {
   double height = 0.0;
 
   ///[ShowModal]
-  ///Shwo modal so searc places
+  ///Show modal so search places
   void show() {
     showModalBottomSheet(
       context: context,
@@ -76,21 +77,21 @@ class AwesomePlaceSearch {
                   topRight: Radius.circular(15),
                 ),
               ),
-              child: _bodyModal(heigth: height),
+              child: _bodyModal(height: height),
             );
           });
         });
       },
     ).whenComplete(
       () => bloc.input.add(
-        AwesomePlacesSearchClouseEvent(places: AwesomePlacesSearchModel()),
+        AwesomePlacesSearchCloseEvent(places: AwesomePlacesSearchModel()),
       ),
     );
   }
 
   ///[Body]
   ///Commonent that constitutes the body of the modal
-  Widget _bodyModal({required double heigth}) {
+  Widget _bodyModal({required double height}) {
     return StreamBuilder<AwesomePlacesSearchState>(
         stream: bloc.stream,
         builder: (context, AsyncSnapshot<AwesomePlacesSearchState> value) {
@@ -231,7 +232,7 @@ class AwesomePlaceSearch {
   ///[CurrentIcon]
   ///Get current icon of place result item typ
   Widget _getIcon({required List<String> types}) {
-    if (bloc.checkIfContains(types, GlobalConst.shopingList)) {
+    if (bloc.checkIfContains(types, GlobalConst.shoppingList)) {
       return const Icon(Icons.shopping_bag_outlined);
     }
 
@@ -243,7 +244,7 @@ class AwesomePlaceSearch {
       return const Icon(Icons.health_and_safety_outlined);
     }
 
-    if (bloc.checkIfContains(types, GlobalConst.foofList)) {
+    if (bloc.checkIfContains(types, GlobalConst.foodList)) {
       return const Icon(Icons.food_bank_outlined);
     }
 
