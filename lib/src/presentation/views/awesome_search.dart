@@ -24,7 +24,7 @@ import 'package:skeletons/skeletons.dart';
 class AwesomePlaceSearch {
   final String key;
   final String hint;
-  final String errorText;
+
   final Widget? customSearchingWidget;
   final Widget? customErrorWidget;
 
@@ -36,7 +36,6 @@ class AwesomePlaceSearch {
     this.customErrorWidget,
     this.customSearchingWidget,
     required this.key,
-    this.errorText = "something went wrong",
     this.hint = "where are we going?",
     required this.onTap,
   }) {
@@ -187,13 +186,13 @@ class AwesomePlaceSearch {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
+              children: const [
+                Icon(
                   Icons.nearby_error,
                   size: 120.0,
                 ),
-                const SizedBox(height: 20),
-                Text(errorText),
+                SizedBox(height: 20),
+                Text("Something went wrong"),
               ],
             ),
       );
