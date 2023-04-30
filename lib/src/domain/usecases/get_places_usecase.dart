@@ -1,13 +1,12 @@
 part of 'use_case.dart';
 
-class GetPlacesUsecase
-    extends Usecase<AwesomePlacesSearchEntity, ParamSearchEntity> {
-  final IGetPlacesRepository repository;
+class GetPlacesUseCase extends UseCase<AwesomePlacesSearchEntity, ParamSearchEntity> {
+  GetPlacesUseCase({required this.repository});
+  final IGetSearchRepository repository;
 
-  GetPlacesUsecase({required this.repository});
   @override
   Future<Either<Failure, AwesomePlacesSearchEntity>> call(
       {required ParamSearchEntity param}) {
-    return repository.call(param: param);
+    return repository.getPlace(param: param);
   }
 }

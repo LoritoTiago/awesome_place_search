@@ -3,6 +3,7 @@ part of 'awesome_places_search_bloc.dart';
 ///[AwesomePlacesSearchEvent]
 abstract class AwesomePlacesSearchEvent extends Equatable {
   final AwesomePlacesSearchModel places;
+
   const AwesomePlacesSearchEvent({required this.places});
 }
 
@@ -16,17 +17,6 @@ class AwesomePlacesSearchLoadingEvent extends AwesomePlacesSearchEvent {
 
   @override
   List<Object?> get props => [value, places];
-}
-
-///[AwesomePlacesSearchCloseEvent]
-///This event is to close the stream
-class AwesomePlacesSearchCloseEvent extends AwesomePlacesSearchEvent {
-  const AwesomePlacesSearchCloseEvent(
-      {required AwesomePlacesSearchModel places})
-      : super(places: places);
-
-  @override
-  List<Object?> get props => [];
 }
 
 ///[AwesomePlacesSearchLoadedEvent]
