@@ -1,11 +1,3 @@
-## 1.0.8 Custom Error and Searching Widget
-* Add customSearchingWidget
-* add customErrorWidget
-
-## 1.0.7 Custom Error and Searching Widget
-* Add customSearchingWidget
-* add customErrorWidget
-
 ## 1.0.6 First stable version
 * First stable version
 * Remove Dependecy

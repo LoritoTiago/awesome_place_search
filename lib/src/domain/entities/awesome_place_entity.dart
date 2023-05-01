@@ -9,16 +9,17 @@ class AwesomePlacesSearchEntity {
 }
 
 class PredictionEntity {
-  PredictionEntity(
-      {this.description,
-      this.matchedSubstrings,
-      this.placeId,
-      this.reference,
-      this.structuredFormatting,
-      this.terms,
-      this.types,
-      this.latitude,
-      this.longitude});
+  PredictionEntity({
+    this.description,
+    this.matchedSubstrings,
+    this.placeId,
+    this.reference,
+    this.structuredFormatting,
+    this.terms,
+    this.types,
+    this.latitude,
+    this.longitude,
+  });
 
   final String? description;
   double? latitude;

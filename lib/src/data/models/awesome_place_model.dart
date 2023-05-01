@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
+import 'package:awesome_place_search/src/domain/entities/param_search_entity.dart';
 
 import '../../domain/entities/awesome_place_entity.dart';
-import '../../domain/repositories/i_get_places.dart';
 
 AwesomePlacesSearchModel awesomePlacesModelFromJson(String str) =>
     AwesomePlacesSearchModel.fromJson(json.decode(str));
@@ -71,7 +71,6 @@ class Term extends TermEntity {
       );
 }
 
-class ParmSearchModel extends ParmSearchEntity {
-  ParmSearchModel({required String value, required String key})
-      : super(key: key, value: value);
+class ParamSearchModel extends ParamSearchEntity {
+  ParamSearchModel({required String value, required String key}) : super(key: key, value: value);
 }

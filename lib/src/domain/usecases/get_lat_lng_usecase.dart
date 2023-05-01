@@ -1,11 +1,11 @@
 part of 'use_case.dart';
 
-class GetLatLngUsecase extends Usecase<LatLngEntity, String> {
-  final IGetLatLngRepository repository;
+class GetLatLngUseCase extends UseCase<LatLngEntity, String> {
+  GetLatLngUseCase({required this.repository});
+  final IGetSearchRepository repository;
 
-  GetLatLngUsecase({required this.repository});
   @override
-  Future<Either<Failure, LatLngEntity>> call({required String parm}) async {
-    return repository.call(placeId: parm);
+  Future<Either<Failure, LatLngEntity>> call({required String param}) async {
+    return repository.getLatLng(placeId: param);
   }
 }
