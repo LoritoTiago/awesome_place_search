@@ -1,7 +1,6 @@
 import 'dart:developer';
+import 'package:awesome_place_search/src/core/error/failures/i_failure.dart';
 
-import 'package:awesome_place_search/src/core/error/failures/key_empty_failure.dart';
-import 'package:awesome_place_search/src/core/error/failures/server_failure.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
 import 'package:awesome_place_search/src/domain/usecases/use_case.dart';

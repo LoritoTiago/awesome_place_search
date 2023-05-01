@@ -1,7 +1,4 @@
-import 'package:awesome_place_search/src/core/error/failures/empty_failure.dart';
 import 'package:awesome_place_search/src/core/error/failures/i_failure.dart';
-import 'package:awesome_place_search/src/core/error/failures/key_empty_failure.dart';
-import 'package:awesome_place_search/src/core/error/failures/server_failure.dart';
 import 'package:awesome_place_search/src/data/data_sources/get_search_remote_datasource.dart';
 import 'package:awesome_place_search/src/domain/entities/lat_lng_entity.dart';
 import 'package:awesome_place_search/src/domain/entities/param_search_entity.dart';

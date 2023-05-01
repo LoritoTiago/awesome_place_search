@@ -1,3 +1,3 @@
-import 'package:awesome_place_search/src/core/error/failures/i_failure.dart';
+part of 'i_failure.dart';
 
 class KeyEmptyFailure extends Failure {}
