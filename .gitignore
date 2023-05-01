@@ -3,14 +3,14 @@
 *.log
 *.pyc
 *.swp
-.DS_Store
+
 .atom/
 .buildlog/
 .history
 .svn/
 
 # IntelliJ related
-*.iml
+# *.iml
 *.ipr
 *.iws
 .idea/
@@ -22,7 +22,7 @@
 
 # Flutter/Dart/Pub related
 **/doc/api/
-.dart_tool/
+
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
@@ -75,5 +75,5 @@ build/
 
 # From https://dart.dev/tools/pub/package-layout#the-pubspec
 # If your package is an application package, check the lockfile into source control. Otherwise, don’t.
-pubspec.lock
-.vscode
+# pubspec.lock
+# .vscode

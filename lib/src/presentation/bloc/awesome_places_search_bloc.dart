@@ -4,8 +4,9 @@ import 'package:awesome_place_search/src/core/error/failures/i_failure.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
 import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
-import 'package:bloc/bloc.dart';
+
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'awesome_places_search_state.dart';
 
@@ -66,6 +67,8 @@ class AwesomePlacesSearchBloc
 
   ///[checkIfContains]
   bool checkIfContains(List<String> types, List<String> data) {
-    return types.where((type) => data.where((current) => type == current).isNotEmpty).isNotEmpty;
+    return types
+        .where((type) => data.where((current) => type == current).isNotEmpty)
+        .isNotEmpty;
   }
 }
