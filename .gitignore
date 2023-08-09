@@ -3,7 +3,7 @@
 *.log
 *.pyc
 *.swp
-
+.DS_Store
 .atom/
 .buildlog/
 .history
@@ -22,13 +22,12 @@
 
 # Flutter/Dart/Pub related
 **/doc/api/
-
+.dart_tool/
 .flutter-plugins
-.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
-build/
+/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -58,7 +57,6 @@ build/
 **/ios/.generated/
 **/ios/Flutter/App.framework
 **/ios/Flutter/Flutter.framework
-**/ios/Flutter/Flutter.podspec
 **/ios/Flutter/Generated.xcconfig
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
@@ -72,8 +70,4 @@ build/
 !**/ios/**/default.mode2v3
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
-
-# From https://dart.dev/tools/pub/package-layout#the-pubspec
-# If your package is an application package, check the lockfile into source control. Otherwise, don’t.
-# pubspec.lock
-# .vscode
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
