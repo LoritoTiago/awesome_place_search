@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:awesome_place_search/src/commons/consts/const.dart';
 import 'package:awesome_place_search/src/commons/widgets/custom_text_field.dart';
@@ -45,8 +46,8 @@ class AwesomePlaceSearch {
 
   ///[show]
   ///Show modal to search places
-  void show() {
-    showModalBottomSheet(
+  void show() async {
+    showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
       barrierColor: Colors.grey.withOpacity(.7),
@@ -91,9 +92,9 @@ class AwesomePlaceSearch {
 
         if (state is AwesomePlacesSearchClickedState) {
           onTap(Future.value(state.place));
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (Navigator.canPop(context)) {
             Navigator.pop(context);
-          });
+          }
         }
 
         return Padding(

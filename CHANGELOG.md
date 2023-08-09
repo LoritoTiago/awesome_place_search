@@ -1,3 +1,8 @@
+## 1.0.10 fix router stack empty error
+* Fixed error when route stack is empty
+
+
+
 ## 1.0.9 Custom Error and Searching Widget 
 * Fixed some spelling errors
 * Changed the format of some classes to be cleaner
