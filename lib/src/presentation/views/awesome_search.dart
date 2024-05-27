@@ -7,9 +7,9 @@ import 'package:awesome_place_search/src/core/services/debouncer.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import '../bloc/awesome_places_search_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:skeletons/skeletons.dart';
 
 ///[AwesomePlaceSearch]
 /// This is the Main Class
