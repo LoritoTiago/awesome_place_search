@@ -4,18 +4,18 @@
 
 The awesome_place_search package is a Flutter library that provides a user interface for searching places using the Google Places API. With this package, you can easily implement a location search bar that shows suggestions as the user types.
 
-
-
 ## Installation
 
 ### Add pubspec.yaml
-``` yaml
+
+```yaml
 dependencies:
   awesome_place_search: ^1.0.10
 ```
 
 ### Basic
-``` dart
+
+```dart
 import 'package:flutter/material.dart';
 
 import 'package:awesome_place_search/awesome_place_search.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatefulWidget {
         ),
       ),
       ),
-     
+
     );
   }
 
@@ -67,22 +67,17 @@ class MyApp extends StatefulWidget {
 
 # The constructor has 6 attributes:
 
-* `String apiKey is the required attribute. It is the Google Maps API Key your application is using`
+- `String apiKey is the required attribute. It is the Google Maps API Key your application is using`
 
- * `(Future<PredictionModel>) onTap is a callback function called when the user selects one of the autocomplete options.`
-* `BuildContext context is a locator that is used to track each widget in a tree and locate them and their position in the tree.`
+- `(Future<PredictionModel>) onTap is a callback function called when the user selects one of the autocomplete options.`
+- `BuildContext context is a locator that is used to track each widget in a tree and locate them and their position in the tree.`
 
-* `String hint is the text that suggests what sort of input the field accepts.`
-* `Widget onError this widget is for customizing searching widgets.`
-* `Widget onEmpty this widget is for customizing error widgets.`
+- `String hint is the text that suggests what sort of input the field accepts.`
+- `Widget onError this widget is for customizing searching widgets.`
+- `Widget onEmpty this widget is for customizing error widgets.`
 
 ---
-## Maintainer
-
-- [Lorito Tiago](https://github.com/LoritoTiago)
-- [Marco Domingos](https://github.com/Marco4763)
 
 ### Demo
+
 <img src="https://user-images.githubusercontent.com/58330997/231830074-d9c9c65a-cc42-4bcf-80b6-3828b0374fc5.gif" width="230" height="440" alt="Awesome Place Search Demo" />
-
-

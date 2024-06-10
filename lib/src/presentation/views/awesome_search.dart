@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:awesome_place_search/src/commons/consts/const.dart';
 import 'package:awesome_place_search/src/commons/widgets/custom_text_field.dart';
 import 'package:awesome_place_search/src/core/dependencies/dependencies.dart';
 import 'package:awesome_place_search/src/core/services/debouncer.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
+import 'package:awesome_place_search/src/presentation/controller/awesome_place_search_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
+
 import '../bloc/awesome_places_search_bloc.dart';
-import 'package:flutter/material.dart';
 
 ///[AwesomePlaceSearch]
 /// This is the Main Class
@@ -18,11 +21,15 @@ class AwesomePlaceSearch {
   final String hint;
   final String errorText;
   final BuildContext context;
+  final Widget? itemWidget;
+  final Widget? loadingWidget;
 
   final Widget? onError;
   final Widget? onEmpty;
   final Function(Future<PredictionModel>) onTap;
+
   final dependencies = Dependencies();
+  AwesomePlaceSearchController? controller;
 
   AwesomePlaceSearch({
     required this.context,
@@ -32,15 +39,17 @@ class AwesomePlaceSearch {
     required this.onTap,
     this.onEmpty,
     this.onError,
+    this.itemWidget,
+    this.loadingWidget,
   }) {
     //init clean architecture dependency
     dependencies.initDependencies(key);
-    bloc = dependencies.bloc;
+    controller = AwesomePlaceSearchController(dependencies: dependencies);
   }
 
   late final AwesomePlacesSearchBloc bloc;
 
-  final txtsearch = TextEditingController();
+  final _textSearch = TextEditingController();
   final Debouncer _debouncer = Debouncer(milliseconds: 500);
   double height = 0.0;
 
@@ -88,7 +97,7 @@ class AwesomePlaceSearch {
       },
       child: BlocBuilder<AwesomePlacesSearchBloc, AwesomePlacesSearchState>(
           builder: (context, state) {
-        final places = state.places.predictionsModel ?? [];
+        final places = state.places.predictions ?? [];
 
         if (state is AwesomePlacesSearchClickedState) {
           onTap(Future.value(state.place));
@@ -120,7 +129,7 @@ class AwesomePlaceSearch {
                       right: 0,
                       child: CustomTextField(
                         hint: hint,
-                        controller: txtsearch,
+                        controller: _textSearch,
                         onChange: (value) {
                           _debouncer(callback: () {
                             bloc.add(
@@ -215,7 +224,7 @@ class AwesomePlaceSearch {
       onTap: () {
         bloc.add(
           AwesomePlacesSearchClickedEvent(
-            places: AwesomePlacesSearchModel(predictionsModel: []),
+            places: AwesomePlacesSearchModel(predictions: []),
             place: place,
           ),
         );

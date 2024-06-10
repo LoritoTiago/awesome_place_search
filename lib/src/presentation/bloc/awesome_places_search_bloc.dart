@@ -1,23 +1,20 @@
 import 'dart:developer';
-import 'package:awesome_place_search/src/core/error/failures/i_failure.dart';
 
+import 'package:awesome_place_search/src/core/error/failures/i_failure.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
-import 'package:awesome_place_search/src/domain/usecases/use_case.dart';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'awesome_places_search_state.dart';
-
 part 'awesome_places_search_event.dart';
+part 'awesome_places_search_state.dart';
 
 ///[AwesomePlacesSearchBloc]
 ///
 class AwesomePlacesSearchBloc
     extends Bloc<AwesomePlacesSearchEvent, AwesomePlacesSearchState> {
-  final GetPlacesUseCase useCase;
-  final GetLatLngUseCase latLngUseCase;
+  final useCase;
+  final latLngUseCase;
   final String key;
 
   AwesomePlacesSearchBloc({

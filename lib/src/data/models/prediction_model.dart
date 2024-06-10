@@ -1,28 +1,27 @@
 import 'awesome_place_model.dart';
-import '../../domain/entities/awesome_place_entity.dart';
 
-class PredictionModel extends PredictionEntity {
+class PredictionModel {
+  final String? description;
+  double? latitude;
+  double? longitude;
+
+  final List<MatchedSubstring>? matchedSubstrings;
+  final String? placeId;
+  final String? reference;
+  final StructuredFormatting? structuredFormatting;
+  final List<Term>? terms;
+  final List<String>? types;
   PredictionModel({
-    double? latitude,
-    double? longitude,
-    String? description,
-    List<MatchedSubstring>? matchedSubstrings,
-    String? placeId,
-    String? reference,
-    StructuredFormatting? structuredFormatting,
-    List<Term>? terms,
-    List<String>? types,
-  }) : super(
-          latitude: latitude,
-          longitude: longitude,
-          description: description,
-          matchedSubstrings: matchedSubstrings,
-          placeId: placeId,
-          reference: reference,
-          structuredFormatting: structuredFormatting,
-          terms: terms,
-          types: types,
-        );
+    this.latitude,
+    this.longitude,
+    this.description,
+    this.matchedSubstrings,
+    this.placeId,
+    this.reference,
+    this.structuredFormatting,
+    this.terms,
+    this.types,
+  });
 
   factory PredictionModel.fromJson(Map<String, dynamic> json) =>
       PredictionModel(
