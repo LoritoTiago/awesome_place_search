@@ -3,13 +3,14 @@ import 'dart:developer';
 
 import 'package:awesome_place_search/src/commons/consts/const.dart';
 import 'package:awesome_place_search/src/commons/widgets/custom_text_field.dart';
+import 'package:awesome_place_search/src/core/const.dart';
 import 'package:awesome_place_search/src/core/dependencies/dependencies.dart';
 import 'package:awesome_place_search/src/core/services/debouncer.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
 import 'package:awesome_place_search/src/presentation/controller/awesome_place_search_controller.dart';
+import 'package:awesome_place_search/src/presentation/controller/search_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 
 import '../bloc/awesome_places_search_bloc.dart';
@@ -29,7 +30,7 @@ class AwesomePlaceSearch {
   final Function(Future<PredictionModel>) onTap;
 
   final dependencies = Dependencies();
-  AwesomePlaceSearchController? controller;
+  AwesomePlaceSearchController? _controller;
 
   AwesomePlaceSearch({
     required this.context,
@@ -44,7 +45,7 @@ class AwesomePlaceSearch {
   }) {
     //init clean architecture dependency
     dependencies.initDependencies(key);
-    controller = AwesomePlaceSearchController(dependencies: dependencies);
+    _controller = AwesomePlaceSearchController(dependencies: dependencies);
   }
 
   late final AwesomePlacesSearchBloc bloc;
@@ -52,6 +53,9 @@ class AwesomePlaceSearch {
   final _textSearch = TextEditingController();
   final Debounce _debounce = Debounce(milliseconds: 500);
   double height = 0.0;
+
+  SearchState searchState = SearchState.none;
+  List<PredictionModel> _places = [];
 
   ///[show]
   ///Show modal to search places
@@ -84,72 +88,63 @@ class AwesomePlaceSearch {
     );
   }
 
+// final places = state.places.predictions ?? [];
+
+//       if (state is AwesomePlacesSearchClickedState) {
+//         onTap(Future.value(state.place));
+//         if (Navigator.canPop(context)) {
+//           Navigator.pop(context);
+//         }
+//       }
   ///[_bodyModal]
   ///Component that constitutes the body of the modal
   Widget _bodyModal({required double height}) {
-    return BlocProvider(
-      create: (_) {
-        bloc.add(AwesomePlacesSearchLoadingEvent(
-          places: AwesomePlacesSearchModel(),
-          value: "",
-        ));
-        return bloc;
-      },
-      child: BlocBuilder<AwesomePlacesSearchBloc, AwesomePlacesSearchState>(
-          builder: (context, state) {
-        final places = state.places.predictions ?? [];
-
-        if (state is AwesomePlacesSearchClickedState) {
-          onTap(Future.value(state.place));
-          if (Navigator.canPop(context)) {
-            Navigator.pop(context);
-          }
-        }
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              Container(
-                width: 100,
-                height: 10,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.3),
-                  borderRadius: BorderRadius.circular(50),
-                ),
+    return StatefulBuilder(builder: (context, setState) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            Container(
+              width: 100,
+              height: 10,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(.3),
+                borderRadius: BorderRadius.circular(50),
               ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: Stack(
-                  children: [
-                    _switchState(state, places),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      child: CustomTextField(
-                        hint: hint,
-                        controller: _textSearch,
-                        onChange: (value) {
-                          _debounce(callback: () {
-                            bloc.add(
-                              AwesomePlacesSearchLoadingEvent(
-                                value: value,
-                                places: AwesomePlacesSearchModel(),
-                              ),
-                            );
-                          });
-                        },
-                      ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: Stack(
+                children: [
+                  _switchState(_places),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    child: CustomTextField(
+                      hint: hint,
+                      controller: _textSearch,
+                      onChange: (value) {
+                        _debounce(callback: () {
+                          // bloc.add(
+                          //   AwesomePlacesSearchLoadingEvent(
+                          //     value: value,
+                          //     places: AwesomePlacesSearchModel(),
+                          //   ),
+                          // );
+
+                          _searchData(state: setState);
+                        });
+                      },
                     ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        );
-      }),
-    );
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    });
   }
 
   ///[_switchState]
@@ -157,14 +152,15 @@ class AwesomePlaceSearch {
   ///current state is and displays
   ///the appropriate widget depending on the state
   Widget _switchState(
-    AwesomePlacesSearchState? state,
+    // AwesomePlacesSearchState? state,
     List<PredictionModel> places,
   ) {
-    if (state is AwesomePlacesSearchLoadingState) {
+    if (searchState == SearchState.none) return const SizedBox.shrink();
+    if (searchState == SearchState.empty) {
       return Positioned.fill(top: 80, child: _emptyList());
     }
 
-    if (state is AwesomePlacesSearchKeyEmptyState) {
+    if (searchState == SearchState.keyEmpty) {
       return Positioned.fill(
         top: 80,
         child: onEmpty ??
@@ -177,13 +173,13 @@ class AwesomePlaceSearch {
                   size: 120.0,
                 ),
                 const SizedBox(height: 20),
-                Text(state.message),
+                Text(keyEmptyMessage),
               ],
             ),
       );
     }
 
-    if (state is AwesomePlacesSearchErrorState) {
+    if (searchState == SearchState.serverError) {
       return Positioned.fill(
         top: 80,
         child: onError ??
@@ -282,5 +278,24 @@ class AwesomePlaceSearch {
         );
       },
     );
+  }
+
+  void _searchData({required StateSetter state}) async {
+    state(() {
+      searchState = SearchState.loading;
+    });
+
+    final result = await _controller?.getPlaces(value: _textSearch.text);
+
+    result?.fold((left) {
+      state(() {
+        searchState = _controller!.mapError(left);
+      });
+    }, (right) {
+      state(() {
+        _places = right.predictions ?? [];
+        searchState = SearchState.success;
+      });
+    });
   }
 }

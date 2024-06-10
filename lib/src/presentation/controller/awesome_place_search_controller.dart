@@ -2,6 +2,7 @@ import 'package:awesome_place_search/src/core/dependencies/dependencies.dart';
 import 'package:awesome_place_search/src/core/error/failures/i_failure.dart';
 import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/lat_lng_model.dart';
+import 'package:awesome_place_search/src/presentation/controller/search_state.dart';
 import 'package:dartz/dartz.dart';
 
 class AwesomePlaceSearchController {
@@ -35,5 +36,20 @@ class AwesomePlaceSearchController {
     final result = await dependencies.repository?.getLatLng(placeId: value);
 
     return result!;
+  }
+
+  SearchState mapError(Failure left) {
+    if (left is KeyEmptyFailure) {
+      // emit(AwesomePlacesSearchKeyEmptyState(
+      //     message: "Please enter a valid key"));
+
+      return SearchState.keyEmpty;
+    }
+
+    if (left is EmptyFailure) {
+      return SearchState.empty;
+    }
+
+    return SearchState.serverError;
   }
 }
