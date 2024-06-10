@@ -4,22 +4,21 @@ version: 1.0.10
 homepage: https://github.com/LoritoTiago/awesome_place_search.git
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.5
-  skeletons: ^0.0.3
+  http: ^1.2.1
   dartz: ^0.10.1
   equatable: ^2.0.5
   flutter_bloc: ^8.1.2
-
+  flutter_skeleton_ui: ^0.0.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
