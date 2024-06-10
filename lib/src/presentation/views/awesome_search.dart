@@ -50,7 +50,7 @@ class AwesomePlaceSearch {
   late final AwesomePlacesSearchBloc bloc;
 
   final _textSearch = TextEditingController();
-  final Debouncer _debouncer = Debouncer(milliseconds: 500);
+  final Debounce _debounce = Debounce(milliseconds: 500);
   double height = 0.0;
 
   ///[show]
@@ -131,7 +131,7 @@ class AwesomePlaceSearch {
                         hint: hint,
                         controller: _textSearch,
                         onChange: (value) {
-                          _debouncer(callback: () {
+                          _debounce(callback: () {
                             bloc.add(
                               AwesomePlacesSearchLoadingEvent(
                                 value: value,

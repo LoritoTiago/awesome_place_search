@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:ui';
 
-abstract class IDebouncer {
+abstract class IDebounce {
   void call({required VoidCallback callback});
 }
 
-class Debouncer implements IDebouncer {
+class Debounce implements IDebounce {
   final int milliseconds;
 
   Timer? _timer;
 
-  Debouncer({
+  Debounce({
     required this.milliseconds,
   });
 
