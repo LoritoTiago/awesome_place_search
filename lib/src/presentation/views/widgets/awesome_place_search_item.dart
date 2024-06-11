@@ -15,8 +15,6 @@ class AwesomePlaceSearchItem extends StatelessWidget {
   final Color? indicatorColor;
 
   final Widget? placeIcon;
-  // final bool canShowBorder;
-  // final bool searched;
   final VoidCallback onTap;
   const AwesomePlaceSearchItem({
     super.key,
@@ -163,10 +161,6 @@ class AwesomePlaceSearchItem extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _getIcon() {
-  //   return _getIconPlace(types: );
-  // }
 
   Widget _getIcon() {
     final types = placesTypes ?? [];

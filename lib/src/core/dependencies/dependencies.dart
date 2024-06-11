@@ -5,8 +5,6 @@ import 'package:awesome_place_search/src/data/repositories/get_search_repository
 class Dependencies {
   GetSearchRepository? repository;
   String? key;
-  String? serverErrorMessage;
-  String? keyErrorMessage;
 
   void initDependencies(String key) {
     final dataSource = GetSearchRemoteDataSource(key: key, http: HttpClient());

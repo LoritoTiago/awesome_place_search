@@ -23,19 +23,6 @@ class AwesomePlaceSearchController {
     );
 
     return result!;
-    // result?.fold((left) {
-    //   if (left is KeyEmptyFailure) {
-    //     // emit(AwesomePlacesSearchKeyEmptyState(
-    //     //     message: "Please enter a valid key"));
-    //   }
-    //   if (left is ServerFailure) {
-    //     // emit(AwesomePlacesSearchErrorState());
-    //   }
-    // }, (right) {
-    //   final res = right as AwesomePlacesSearchModel;
-    //   // log(res.predictions!.length.toString());
-    //   // add(AwesomePlacesSearchLoadedEvent(places: res));
-    // });
   }
 
   Future<Either<Failure, LatLngModel>> getLatLng(
@@ -47,9 +34,6 @@ class AwesomePlaceSearchController {
 
   SearchState mapError(Failure left) {
     if (left is InvalidKeyFailure) {
-      // emit(AwesomePlacesSearchKeyEmptyState(
-      //     message: "Please enter a valid key"));
-
       return SearchState.invalidKey;
     }
 

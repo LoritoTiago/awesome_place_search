@@ -110,14 +110,6 @@ class AwesomePlaceSearch {
     );
   }
 
-// final places = state.places.predictions ?? [];
-
-//       if (state is AwesomePlacesSearchClickedState) {
-//         onTap(Future.value(state.place));
-//         if (Navigator.canPop(context)) {
-//           Navigator.pop(context);
-//         }
-//       }
   ///[_bodyModal]
   ///Component that constitutes the body of the modal
   Widget _bodyModal({required double height}) {
@@ -257,36 +249,7 @@ class AwesomePlaceSearch {
         _tapItem(place: place);
       },
     );
-    // return ListTile(
-    //   onTap: () {
-    //     // bloc.add(
-    //     //   AwesomePlacesSearchClickedEvent(
-    //     //     places: AwesomePlacesSearchModel(predictions: []),
-    //     //     place: place,
-    //     //   ),
-    //     // );
-    //   },
-    //   leading: _getIcon(types: place.types!),
-    //   title: Text("${place.description}"),
-    //   subtitle: Text("${place.structuredFormatting!.secondaryText}"),
-    // )
   }
-
-  ///[_getIcon]
-  ///Get the current icon of place result item typ
-  // Widget _getIcon({required List<String> types}) {
-  //   IconData? data;
-  //   for (var element in GlobalConst.typeList) {
-  //     element.map((key, value) {
-  //       if (_controller!.checkIfContains(types, key)) {
-  //         data = value;
-  //       }
-  //       return MapEntry(key, value);
-  //     });
-  //   }
-
-  //   return Icon(data ?? Icons.location_on_outlined);
-  // }
 
   void _searchData({required StateSetter state}) async {
     state(() {
