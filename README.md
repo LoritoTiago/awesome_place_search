@@ -114,4 +114,5 @@ class MyApp extends StatefulWidget {
 
 ### Demo
 
-<img src="https://github.com/LoritoTiago/awesome_place_search/assets/58330997/ae9d8e84-a059-4894-b1bf-ac81ab957c51" width="230" height="440" alt="Awesome Place Search Demo" />
+![awesome_place_searc](https://github.com/LoritoTiago/awesome_place_search/assets/58330997/b42c35b6-8adb-4544-a2ba-d8bdee281606)
+
