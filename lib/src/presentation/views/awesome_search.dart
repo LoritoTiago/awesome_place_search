@@ -95,9 +95,9 @@ class AwesomePlaceSearch {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(modalBorderRadius),
-                  right: Radius.circular(modalBorderRadius),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(modalBorderRadius),
+                  topRight: Radius.circular(modalBorderRadius),
                   // topLeft: ,
                   // topRight: Radius.circular(modalBorderRadius),
                 ),
