@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 ///[AwesomePlaceSearch]
 /// This is the Main Class
 class AwesomePlaceSearch {
-  final String key;
+  final String apiKey;
   final String hint;
   final String errorText;
   final BuildContext context;
@@ -42,7 +42,7 @@ class AwesomePlaceSearch {
   AwesomePlaceSearch({
     required this.context,
     this.searchTextFieldDecoration,
-    required this.key,
+    required this.apiKey,
     this.modalBorderRadius = 15.0,
     this.elevation,
     this.dividerItemWidth = 0.2,
@@ -63,7 +63,7 @@ class AwesomePlaceSearch {
 
     // assert(dividerItemWidth < 1.0, "The divider width must be less than 1.0");
 
-    dependencies.initDependencies(key);
+    dependencies.initDependencies(apiKey);
     _controller = AwesomePlaceSearchController(
         dependencies: dependencies, countries: countries);
   }
