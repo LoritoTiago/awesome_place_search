@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:awesome_place_search/src/core/client/http_client.dart';
 import 'package:awesome_place_search/src/core/error/exceptions/key_empty_exception.dart';
 import 'package:awesome_place_search/src/data/data_sources/iget_search_remote_datasource.dart';
 import 'package:awesome_place_search/src/data/models/lat_lng_model.dart';
-import '../models/awesome_place_model.dart';
+
 import '../../core/error/exceptions/network_exception.dart';
 import '../../core/error/exceptions/server_exception.dart';
+import '../models/awesome_place_model.dart';
 
 class GetSearchRemoteDataSource implements IGetSearchRemoteDataSource {
   GetSearchRemoteDataSource({
@@ -60,6 +62,8 @@ class GetSearchRemoteDataSource implements IGetSearchRemoteDataSource {
           param: {
             "input": param.value,
             "key": param.key,
+            // "components": "country:ao|country:pt",
+            "components": param.countries ?? "",
           },
         );
         if (res.statusCode == 200) {

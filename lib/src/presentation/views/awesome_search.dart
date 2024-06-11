@@ -1,19 +1,16 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:awesome_place_search/src/commons/consts/const.dart';
 import 'package:awesome_place_search/src/commons/widgets/custom_text_field.dart';
 import 'package:awesome_place_search/src/core/const.dart';
 import 'package:awesome_place_search/src/core/dependencies/dependencies.dart';
 import 'package:awesome_place_search/src/core/services/debouncer.dart';
-import 'package:awesome_place_search/src/data/models/awesome_place_model.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
 import 'package:awesome_place_search/src/presentation/controller/awesome_place_search_controller.dart';
 import 'package:awesome_place_search/src/presentation/controller/search_state.dart';
+import 'package:awesome_place_search/src/presentation/views/widgets/awesome_place_search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
-
-import '../bloc/awesome_places_search_bloc.dart';
 
 ///[AwesomePlaceSearch]
 /// This is the Main Class
@@ -24,9 +21,18 @@ class AwesomePlaceSearch {
   final BuildContext context;
   final Widget? itemWidget;
   final Widget? loadingWidget;
+  final InputDecoration? searchTextFieldDecoration;
+  final Color? dividerItemColor;
+  final double dividerItemWidth;
+  final Widget? placeIcon;
 
   final Widget? onError;
   final Widget? onEmpty;
+  final double? elevation;
+  final List<String> countries;
+  final Color? indicatorColor;
+  final TextStyle? subtitleStyle;
+  final TextStyle? titleStyle;
   final Function(Future<PredictionModel>) onTap;
 
   final dependencies = Dependencies();
@@ -34,7 +40,11 @@ class AwesomePlaceSearch {
 
   AwesomePlaceSearch({
     required this.context,
+    this.searchTextFieldDecoration,
     required this.key,
+    this.elevation,
+    this.dividerItemWidth = 0.2,
+    this.countries = const [],
     this.errorText = "something went wrong",
     this.hint = "where are we going?",
     required this.onTap,
@@ -42,19 +52,27 @@ class AwesomePlaceSearch {
     this.onError,
     this.itemWidget,
     this.loadingWidget,
+    this.dividerItemColor,
+    this.placeIcon,
+    this.indicatorColor,
+    this.subtitleStyle,
+    this.titleStyle,
   }) {
     //init clean architecture dependency
+
+    assert(dividerItemWidth < 1.0, "The divider width must be less than 1.0");
     dependencies.initDependencies(key);
-    _controller = AwesomePlaceSearchController(dependencies: dependencies);
+    _controller = AwesomePlaceSearchController(
+        dependencies: dependencies, countries: countries);
   }
 
-  late final AwesomePlacesSearchBloc bloc;
+  // late final AwesomePlacesSearchBloc bloc;
 
   final _textSearch = TextEditingController();
   final Debounce _debounce = Debounce(milliseconds: 500);
-  double height = 0.0;
+  double _height = 0.0;
 
-  SearchState searchState = SearchState.none;
+  SearchState _searchState = SearchState.none;
   List<PredictionModel> _places = [];
 
   ///[show]
@@ -69,9 +87,9 @@ class AwesomePlaceSearch {
       builder: (context) {
         return Builder(builder: (context) {
           return LayoutBuilder(builder: (_, BoxConstraints constraints) {
-            height = constraints.maxHeight;
+            _height = constraints.maxHeight;
             return Container(
-              height: height * .9,
+              height: _height * .9,
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -80,7 +98,7 @@ class AwesomePlaceSearch {
                   topRight: Radius.circular(15),
                 ),
               ),
-              child: _bodyModal(height: height),
+              child: _bodyModal(height: _height),
             );
           });
         });
@@ -104,10 +122,10 @@ class AwesomePlaceSearch {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            const SizedBox(height: 10),
+            // const SizedBox(height: 10),
             Container(
               width: 100,
-              height: 10,
+              height: 5,
               decoration: BoxDecoration(
                 color: Colors.grey.withOpacity(.3),
                 borderRadius: BorderRadius.circular(50),
@@ -121,17 +139,18 @@ class AwesomePlaceSearch {
                   Positioned(
                     left: 0,
                     right: 0,
+                    top: 0,
                     child: CustomTextField(
                       hint: hint,
+                      searchTextFieldDecorator: searchTextFieldDecoration,
+                      elevation: elevation,
                       controller: _textSearch,
                       onChange: (value) {
                         _debounce(callback: () {
-                          // bloc.add(
-                          //   AwesomePlacesSearchLoadingEvent(
-                          //     value: value,
-                          //     places: AwesomePlacesSearchModel(),
-                          //   ),
-                          // );
+                          if (value.isEmpty) {
+                            setState(() => _searchState = SearchState.none);
+                            return;
+                          }
 
                           _searchData(state: setState);
                         });
@@ -155,12 +174,14 @@ class AwesomePlaceSearch {
     // AwesomePlacesSearchState? state,
     List<PredictionModel> places,
   ) {
-    if (searchState == SearchState.none) return const SizedBox.shrink();
-    if (searchState == SearchState.empty) {
+    if (_searchState == SearchState.none) {
+      return const Positioned(left: 0, top: 0, child: SizedBox.shrink());
+    }
+    if (_searchState == SearchState.empty) {
       return Positioned.fill(top: 80, child: _emptyList());
     }
 
-    if (searchState == SearchState.keyEmpty) {
+    if (_searchState == SearchState.keyEmpty) {
       return Positioned.fill(
         top: 80,
         child: onEmpty ??
@@ -179,7 +200,7 @@ class AwesomePlaceSearch {
       );
     }
 
-    if (searchState == SearchState.serverError) {
+    if (_searchState == SearchState.serverError) {
       return Positioned.fill(
         top: 80,
         child: onError ??
@@ -216,36 +237,50 @@ class AwesomePlaceSearch {
   ///Item of place result list
   Widget _item({required PredictionModel place}) {
     log(place.latitude.toString());
-    return ListTile(
-      onTap: () {
-        bloc.add(
-          AwesomePlacesSearchClickedEvent(
-            places: AwesomePlacesSearchModel(predictions: []),
-            place: place,
-          ),
-        );
-      },
-      leading: _getIcon(types: place.types!),
-      title: Text("${place.description}"),
-      subtitle: Text("${place.structuredFormatting!.secondaryText}"),
+
+    return AwesomePlaceSearchItem(
+      title: place.description ?? "",
+      searchedValue: _textSearch.text,
+      dividerColor: dividerItemColor,
+      dividerWidth: dividerItemWidth,
+      placeIcon: placeIcon,
+      placesTypes: place.types,
+      subtitle: place.structuredFormatting!.secondaryText ?? "",
+      indicatorColor: indicatorColor,
+      subtitleStyle: subtitleStyle,
+      titleStyle: titleStyle,
+      onTap: () {},
     );
+    // return ListTile(
+    //   onTap: () {
+    //     // bloc.add(
+    //     //   AwesomePlacesSearchClickedEvent(
+    //     //     places: AwesomePlacesSearchModel(predictions: []),
+    //     //     place: place,
+    //     //   ),
+    //     // );
+    //   },
+    //   leading: _getIcon(types: place.types!),
+    //   title: Text("${place.description}"),
+    //   subtitle: Text("${place.structuredFormatting!.secondaryText}"),
+    // )
   }
 
   ///[_getIcon]
   ///Get the current icon of place result item typ
-  Widget _getIcon({required List<String> types}) {
-    IconData? data;
-    for (var element in GlobalConst.typeList) {
-      element.map((key, value) {
-        if (bloc.checkIfContains(types, key)) {
-          data = value;
-        }
-        return MapEntry(key, value);
-      });
-    }
+  // Widget _getIcon({required List<String> types}) {
+  //   IconData? data;
+  //   for (var element in GlobalConst.typeList) {
+  //     element.map((key, value) {
+  //       if (_controller!.checkIfContains(types, key)) {
+  //         data = value;
+  //       }
+  //       return MapEntry(key, value);
+  //     });
+  //   }
 
-    return Icon(data ?? Icons.location_on_outlined);
-  }
+  //   return Icon(data ?? Icons.location_on_outlined);
+  // }
 
   ///[_emptyList]
   ///If the place list is empty then this widget is displayed
@@ -282,19 +317,19 @@ class AwesomePlaceSearch {
 
   void _searchData({required StateSetter state}) async {
     state(() {
-      searchState = SearchState.loading;
+      _searchState = SearchState.loading;
     });
 
     final result = await _controller?.getPlaces(value: _textSearch.text);
 
     result?.fold((left) {
       state(() {
-        searchState = _controller!.mapError(left);
+        _searchState = _controller!.mapError(left);
       });
     }, (right) {
       state(() {
         _places = right.predictions ?? [];
-        searchState = SearchState.success;
+        _searchState = SearchState.success;
       });
     });
   }

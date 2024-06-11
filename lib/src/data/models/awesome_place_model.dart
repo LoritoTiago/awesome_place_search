@@ -78,5 +78,6 @@ class Term {
 class ParamSearchModel {
   final String value;
   final String key;
-  ParamSearchModel({required this.value, required this.key});
+  final String? countries;
+  ParamSearchModel({required this.value, this.countries, required this.key});
 }

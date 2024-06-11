@@ -7,13 +7,20 @@ import 'package:dartz/dartz.dart';
 
 class AwesomePlaceSearchController {
   final Dependencies dependencies;
+  final List<String> countries;
 
-  AwesomePlaceSearchController({required this.dependencies});
+  AwesomePlaceSearchController(
+      {required this.dependencies, required this.countries});
 
   Future<Either<Failure, AwesomePlacesSearchModel>> getPlaces(
       {required String value}) async {
     final result = await dependencies.repository?.getPlace(
-        param: ParamSearchModel(key: dependencies.key!, value: value));
+      param: ParamSearchModel(
+        key: dependencies.key!,
+        value: value,
+        countries: _getCountries(),
+      ),
+    );
 
     return result!;
     // result?.fold((left) {
@@ -51,5 +58,15 @@ class AwesomePlaceSearchController {
     }
 
     return SearchState.serverError;
+  }
+
+  String _getCountries() {
+    List<String> result = [];
+
+    for (var item in countries) {
+      result.add("country:$item");
+    }
+
+    return result.join('|');
   }
 }
