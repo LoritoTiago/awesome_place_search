@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:awesome_place_search/src/commons/widgets/custom_text_field.dart';
-import 'package:awesome_place_search/src/core/const.dart';
 import 'package:awesome_place_search/src/core/dependencies/dependencies.dart';
 import 'package:awesome_place_search/src/core/services/debouncer.dart';
 import 'package:awesome_place_search/src/data/models/prediction_model.dart';
@@ -10,7 +9,6 @@ import 'package:awesome_place_search/src/presentation/controller/awesome_place_s
 import 'package:awesome_place_search/src/presentation/controller/search_state.dart';
 import 'package:awesome_place_search/src/presentation/views/widgets/awesome_place_search_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 
 ///[AwesomePlaceSearch]
 /// This is the Main Class
@@ -19,19 +17,22 @@ class AwesomePlaceSearch {
   final String hint;
   final String errorText;
   final BuildContext context;
-  final Widget? itemWidget;
+  final double modalBorderRadius;
+
   final Widget? loadingWidget;
   final InputDecoration? searchTextFieldDecoration;
   final Color? dividerItemColor;
   final double dividerItemWidth;
-  final Widget? placeIcon;
+  final Widget? placeIconWidget;
 
-  final Widget? onError;
-  final Widget? onEmpty;
+  final Widget? onErrorWidget;
+
   final double? elevation;
   final List<String> countries;
   final Color? indicatorColor;
   final TextStyle? subtitleStyle;
+  final Widget? invalidKeyWidget;
+
   final TextStyle? titleStyle;
   final Function(Future<PredictionModel>) onTap;
 
@@ -42,25 +43,26 @@ class AwesomePlaceSearch {
     required this.context,
     this.searchTextFieldDecoration,
     required this.key,
+    this.modalBorderRadius = 15.0,
     this.elevation,
     this.dividerItemWidth = 0.2,
     this.countries = const [],
     this.errorText = "something went wrong",
-    this.hint = "where are we going?",
+    this.hint = "Something went wrong",
     required this.onTap,
-    this.onEmpty,
-    this.onError,
-    this.itemWidget,
+    this.invalidKeyWidget,
+    this.onErrorWidget,
     this.loadingWidget,
     this.dividerItemColor,
-    this.placeIcon,
+    this.placeIconWidget,
     this.indicatorColor,
     this.subtitleStyle,
     this.titleStyle,
   }) {
     //init clean architecture dependency
 
-    assert(dividerItemWidth < 1.0, "The divider width must be less than 1.0");
+    // assert(dividerItemWidth < 1.0, "The divider width must be less than 1.0");
+
     dependencies.initDependencies(key);
     _controller = AwesomePlaceSearchController(
         dependencies: dependencies, countries: countries);
@@ -91,11 +93,13 @@ class AwesomePlaceSearch {
             return Container(
               height: _height * .9,
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
+                borderRadius: BorderRadius.horizontal(
+                  left: Radius.circular(modalBorderRadius),
+                  right: Radius.circular(modalBorderRadius),
+                  // topLeft: ,
+                  // topRight: Radius.circular(modalBorderRadius),
                 ),
               ),
               child: _bodyModal(height: _height),
@@ -131,7 +135,7 @@ class AwesomePlaceSearch {
                 borderRadius: BorderRadius.circular(50),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Expanded(
               child: Stack(
                 children: [
@@ -143,7 +147,7 @@ class AwesomePlaceSearch {
                     child: CustomTextField(
                       hint: hint,
                       searchTextFieldDecorator: searchTextFieldDecoration,
-                      elevation: elevation,
+                      elevation: elevation ?? 10.0,
                       controller: _textSearch,
                       onChange: (value) {
                         _debounce(callback: () {
@@ -177,24 +181,24 @@ class AwesomePlaceSearch {
     if (_searchState == SearchState.none) {
       return const Positioned(left: 0, top: 0, child: SizedBox.shrink());
     }
-    if (_searchState == SearchState.empty) {
-      return Positioned.fill(top: 80, child: _emptyList());
+    if (_searchState == SearchState.loading) {
+      return const Center(child: CircularProgressIndicator());
     }
 
-    if (_searchState == SearchState.keyEmpty) {
+    if (_searchState == SearchState.invalidKey) {
       return Positioned.fill(
         top: 80,
-        child: onEmpty ??
-            Column(
+        child: invalidKeyWidget ??
+            const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.no_encryption_gmailerrorred_outlined,
                   size: 120.0,
                 ),
-                const SizedBox(height: 20),
-                Text(keyEmptyMessage),
+                SizedBox(height: 20),
+                Text("Invalid key"),
               ],
             ),
       );
@@ -203,7 +207,7 @@ class AwesomePlaceSearch {
     if (_searchState == SearchState.serverError) {
       return Positioned.fill(
         top: 80,
-        child: onError ??
+        child: onErrorWidget ??
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -219,7 +223,7 @@ class AwesomePlaceSearch {
       );
     }
 
-    return Positioned.fill(top: 80, child: _list(places: places));
+    return Positioned.fill(top: 50, child: _list(places: places));
   }
 
   ///[_list]
@@ -243,13 +247,15 @@ class AwesomePlaceSearch {
       searchedValue: _textSearch.text,
       dividerColor: dividerItemColor,
       dividerWidth: dividerItemWidth,
-      placeIcon: placeIcon,
+      placeIcon: placeIconWidget,
       placesTypes: place.types,
       subtitle: place.structuredFormatting!.secondaryText ?? "",
       indicatorColor: indicatorColor,
       subtitleStyle: subtitleStyle,
       titleStyle: titleStyle,
-      onTap: () {},
+      onTap: () {
+        _tapItem(place: place);
+      },
     );
     // return ListTile(
     //   onTap: () {
@@ -282,39 +288,6 @@ class AwesomePlaceSearch {
   //   return Icon(data ?? Icons.location_on_outlined);
   // }
 
-  ///[_emptyList]
-  ///If the place list is empty then this widget is displayed
-  Widget _emptyList() {
-    return ListView.builder(
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: const SkeletonAvatar(
-            style: SkeletonAvatarStyle(
-              shape: BoxShape.rectangle,
-              width: 50,
-              height: 50,
-            ),
-          ),
-          title: SkeletonLine(
-            style: SkeletonLineStyle(
-              height: 16,
-              width: double.infinity,
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          subtitle: SkeletonLine(
-            style: SkeletonLineStyle(
-              height: 16,
-              width: 100,
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   void _searchData({required StateSetter state}) async {
     state(() {
       _searchState = SearchState.loading;
@@ -331,6 +304,20 @@ class AwesomePlaceSearch {
         _places = right.predictions ?? [];
         _searchState = SearchState.success;
       });
+    });
+  }
+
+  void _tapItem({required PredictionModel place}) async {
+    final result = await _controller?.getLatLng(value: place.placeId ?? "");
+    result?.fold((left) {
+      throw Exception("Was not possible to obtain the coordinates");
+    }, (right) {
+      place.latitude = right.latModel;
+      place.longitude = right.lngModel;
+      onTap(Future.value(place));
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
     });
   }
 }

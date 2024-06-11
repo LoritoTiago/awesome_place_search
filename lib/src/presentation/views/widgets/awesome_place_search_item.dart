@@ -75,8 +75,8 @@ class AwesomePlaceSearchItem extends StatelessWidget {
 
     var titleStyleWithIndicatorColor =
         titleStyle?.copyWith(color: indicatorColor ?? Colors.blue) ??
-            const TextStyle(
-              color: Colors.blue,
+            TextStyle(
+              color: indicatorColor,
               fontSize: size,
               fontWeight: weight,
             );
@@ -117,10 +117,12 @@ class AwesomePlaceSearchItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(
-              color: dividerColor ?? Colors.grey,
-              width: dividerWidth,
-            ),
+            bottom: dividerWidth == 0.0
+                ? BorderSide.none
+                : BorderSide(
+                    color: dividerColor ?? Colors.grey,
+                    width: dividerWidth,
+                  ),
           ),
         ),
         padding: const EdgeInsets.symmetric(vertical: 10.0),

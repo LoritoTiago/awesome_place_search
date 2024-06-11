@@ -46,11 +46,11 @@ class AwesomePlaceSearchController {
   }
 
   SearchState mapError(Failure left) {
-    if (left is KeyEmptyFailure) {
+    if (left is InvalidKeyFailure) {
       // emit(AwesomePlacesSearchKeyEmptyState(
       //     message: "Please enter a valid key"));
 
-      return SearchState.keyEmpty;
+      return SearchState.invalidKey;
     }
 
     if (left is EmptyFailure) {

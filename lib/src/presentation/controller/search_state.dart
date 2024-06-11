@@ -1,6 +1,6 @@
 enum SearchState {
   keyError,
-  keyEmpty,
+  invalidKey,
   serverError,
   success,
   loading,

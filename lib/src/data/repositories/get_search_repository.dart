@@ -38,8 +38,8 @@ class GetSearchRepository implements IRepository {
         return Left(EmptyFailure());
       }
       return Right(res);
-    } on KeyEmptyException {
-      return Left(KeyEmptyFailure());
+    } on InvalidKeyException {
+      return Left(InvalidKeyFailure());
     } catch (e) {
       return Left(ServerFailure(message: "Something went wrong"));
     }

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
-  final String hint;
-  final double? elevation;
+  final String? hint;
+  final double elevation;
   final Function(String) onChange;
   final InputDecoration? searchTextFieldDecorator;
 
   const CustomTextField({
     super.key,
-    this.elevation,
-    required this.hint,
+    required this.elevation,
+    this.hint,
     required this.controller,
     required this.onChange,
     this.searchTextFieldDecorator,
@@ -18,28 +18,13 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final elevationData = elevation ?? 5;
-    return Container(
-      height: 80,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(10),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(.3),
-            blurRadius: elevationData,
-            offset: Offset(
-              0.0,
-              elevationData,
-            ),
-          )
-        ],
-      ),
+    return Material(
+      elevation: searchTextFieldDecorator != null ? 0.0 : elevation,
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
+      shadowColor: Colors.grey.withOpacity(.1),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: TextField(
           controller: controller,
           onChanged: onChange,

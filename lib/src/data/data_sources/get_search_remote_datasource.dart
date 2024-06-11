@@ -53,7 +53,7 @@ class GetSearchRemoteDataSource implements IGetSearchRemoteDataSource {
       {required ParamSearchModel param}) async {
     log(param.key);
     if (param.key.isEmpty || param.key.contains(' ')) {
-      throw KeyEmptyException();
+      throw InvalidKeyException();
     } else {
       try {
         var res = await http.get(
