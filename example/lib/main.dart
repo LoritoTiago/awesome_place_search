@@ -104,7 +104,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
             key: "AIzaSyAx20gzBenn2aoMqVt2MvbMw8_fIx8ZnH4",
             countries: ["ao", "pt"],
-            elevation: 3,
+            dividerItemColor: Colors.grey.withOpacity(.5),
+            dividerItemWidth: .5,
+            elevation: 5,
+            hint: "Search data",
+
+            indicatorColor: Colors.blue,
+            modalBorderRadius: 50.0,
+
             onTap: (value) async {
               final va = await value;
               setState(() {
