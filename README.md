@@ -113,4 +113,5 @@ class MyApp extends StatefulWidget {
 
 ### Demo
 
-<img src="https://github.com/LoritoTiago/awesome_place_search/assets/58330997/ae9d8e84-a059-4894-b1bf-ac81ab957c51" width="230" height="440" alt="Awesome Place Search Demo" />
+![Simulator Screen Recording - iPhone 15 Pro - 2024-06-17 at 11 32 46](https://github.com/LoritoTiago/awesome_place_search/assets/58330997/3024127b-6de7-484e-8400-7717a8d1faf6)
+
