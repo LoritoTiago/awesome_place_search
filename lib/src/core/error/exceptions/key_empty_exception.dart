@@ -1,1 +1,1 @@
-class KeyEmptyException implements Exception {}
+class InvalidKeyException implements Exception {}

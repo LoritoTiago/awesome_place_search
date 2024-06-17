@@ -100,7 +100,13 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           AwesomePlaceSearch(
             context: context,
-            key: "Your Google Map Key",
+            apiKey: "Your Google Map Key",
+            countries: ["ao", "pt"],
+            dividerItemColor: Colors.grey.withOpacity(.5),
+            dividerItemWidth: .5,
+            elevation: 5,
+            indicatorColor: Colors.blue,
+            modalBorderRadius: 50.0,
             onTap: (value) async {
               final va = await value;
               setState(() {
