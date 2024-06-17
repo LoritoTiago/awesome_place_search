@@ -105,7 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
             dividerItemColor: Colors.grey.withOpacity(.5),
             dividerItemWidth: .5,
             elevation: 5,
-            hint: "Search data",
             indicatorColor: Colors.blue,
             modalBorderRadius: 50.0,
             onTap: (value) async {

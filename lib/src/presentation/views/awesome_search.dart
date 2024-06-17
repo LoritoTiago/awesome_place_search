@@ -48,7 +48,7 @@ class AwesomePlaceSearch {
     this.dividerItemWidth = 0.2,
     this.countries = const [],
     this.errorText = "something went wrong",
-    this.hint = "Something went wrong",
+    this.hint = "Where are we going?",
     required this.onTap,
     this.invalidKeyWidget,
     this.onErrorWidget,
