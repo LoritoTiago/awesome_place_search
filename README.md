@@ -19,7 +19,7 @@
 
 ```yaml
 dependencies:
-  awesome_place_search: ^2.0.0
+  awesome_place_search: ^2.1.0
 ```
 
 ### Basic
@@ -108,10 +108,10 @@ class MyApp extends StatefulWidget {
 - `subtitleStyle: Text style for the subtitle in the search results. (Default: TextStyle() with default settings)`
 - `invalidKeyWidget: Custom widget to display when the API key is invalid. (Default: Text("Invalid API key"))`
 - `titleStyle: Text style for the title in the search results. (Default: TextStyle() with default settings)`
+- `autofocus: Allows the search field to automatically gain focus when displayed, enhancing user experience by anticipating their intent to start searching immediately, without needing extra interaction to focus on the field`
 
 ---
 
 ### Demo
 
 ![Simulator Screen Recording - iPhone 15 Pro - 2024-06-17 at 11 32 46](https://github.com/LoritoTiago/awesome_place_search/assets/58330997/3024127b-6de7-484e-8400-7717a8d1faf6)
-

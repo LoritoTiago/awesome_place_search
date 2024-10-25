@@ -4,11 +4,13 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? hint;
   final double elevation;
+  final bool autofocus;
   final Function(String) onChange;
   final InputDecoration? searchTextFieldDecorator;
 
   const CustomTextField({
     super.key,
+    this.autofocus = false,
     required this.elevation,
     this.hint,
     required this.controller,
@@ -28,6 +30,7 @@ class CustomTextField extends StatelessWidget {
         child: TextField(
           controller: controller,
           onChanged: onChange,
+          autofocus: autofocus,
           decoration: searchTextFieldDecorator ??
               InputDecoration(
                 suffixIcon: controller.text.isNotEmpty
