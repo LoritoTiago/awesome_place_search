@@ -16,6 +16,7 @@ class AwesomePlaceSearch {
   final String apiKey;
   final String hint;
   final String errorText;
+  final bool autofocus;
   final BuildContext context;
   final double modalBorderRadius;
 
@@ -58,6 +59,7 @@ class AwesomePlaceSearch {
     this.indicatorColor,
     this.subtitleStyle,
     this.titleStyle,
+    this.autofocus = false,
   }) {
     //init clean architecture dependency
 
@@ -141,6 +143,7 @@ class AwesomePlaceSearch {
                       searchTextFieldDecorator: searchTextFieldDecoration,
                       elevation: elevation ?? 10.0,
                       controller: _textSearch,
+                      autofocus: autofocus,
                       onChange: (value) {
                         _debounce(callback: () {
                           if (value.isEmpty) {

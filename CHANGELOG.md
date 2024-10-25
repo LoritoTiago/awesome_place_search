@@ -1,4 +1,10 @@
-## 2.0.0 - 2024-06-17
+## 2.1.0
+
+# Added
+
+- autofocus property
+
+## 2.0.0
 
 # Added
 
