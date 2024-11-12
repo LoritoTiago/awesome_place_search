@@ -6,6 +6,7 @@ import 'package:awesome_place_search/src/core/client/http_client.dart';
 import 'package:awesome_place_search/src/core/error/exceptions/key_empty_exception.dart';
 import 'package:awesome_place_search/src/data/data_sources/iget_search_remote_datasource.dart';
 import 'package:awesome_place_search/src/data/models/lat_lng_model.dart';
+import 'package:google_api_headers/google_api_headers.dart';
 
 import '../../core/error/exceptions/network_exception.dart';
 import '../../core/error/exceptions/server_exception.dart';
@@ -21,9 +22,12 @@ class GetSearchRemoteDataSource implements IGetSearchRemoteDataSource {
   final HttpClient http;
   final url = "maps.googleapis.com";
 
+  static const _googleApiHeaders = GoogleApiHeaders();
+
   @override
   Future<LatLngModel> getLatLng({required String param}) async {
     try {
+      final headers = await _googleApiHeaders.getHeaders();
       var res = await http.get(
         authority: url,
         path: "maps/api/place/details/json",
@@ -31,6 +35,7 @@ class GetSearchRemoteDataSource implements IGetSearchRemoteDataSource {
           "placeid": param,
           "key": key,
         },
+        headers: headers,
       );
       if (res.statusCode == 200) {
         final value = json.decode(res.body);
@@ -56,6 +61,7 @@ class GetSearchRemoteDataSource implements IGetSearchRemoteDataSource {
       throw InvalidKeyException();
     } else {
       try {
+        final headers = await _googleApiHeaders.getHeaders();
         var res = await http.get(
           authority: url,
           path: "maps/api/place/autocomplete/json",
@@ -65,6 +71,7 @@ class GetSearchRemoteDataSource implements IGetSearchRemoteDataSource {
             // "components": "country:ao|country:pt",
             "components": param.countries ?? "",
           },
+          headers: headers,
         );
         if (res.statusCode == 200) {
           final result = awesomePlacesModelFromJson(res.body);
